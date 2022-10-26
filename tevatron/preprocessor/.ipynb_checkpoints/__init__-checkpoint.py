@@ -1,0 +1,4 @@
+from .preprocessor_tsv import SimpleTrainPreProcessor as MarcoPassageTrainPreProcessor,  \
+    SimpleCollectionPreProcessor as MarcoPassageCollectionPreProcessor
+
+from .preprocessor_tsv_notitle import SimpleTrainNoTitlePreProcessor as MarcoPassageTrainNoTitlePreProcessor

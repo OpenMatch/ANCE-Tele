@@ -1,0 +1,1 @@
+from .contrastive_loss import (SimpleContrastiveLoss, DistributedContrastiveLoss)
