@@ -16,11 +16,11 @@ from transformers import (
     HfArgumentParser,
 )
 
-from tevatron import utils
-from tevatron import networks
-from tevatron import dataloaders
+from ancetele import utils
+from ancetele import networks
+from ancetele import dataloaders
 
-from tevatron.arguments import ModelArguments, DataArguments, \
+from arguments import ModelArguments, DataArguments, \
     DenseTrainingArguments as TrainingArguments
 
 

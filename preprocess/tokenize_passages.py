@@ -8,7 +8,7 @@ from multiprocessing import Pool
 import sys
 sys.path.append("..")
 ## ------- Modified by SS.
-from tevatron.preprocessor import MarcoPassageCollectionPreProcessor as CollectionPreProcessor
+from ancetele.preprocessor import MarcoPassageCollectionPreProcessor as CollectionPreProcessor
 
 parser = ArgumentParser()
 parser.add_argument('--tokenizer_name', required=True)

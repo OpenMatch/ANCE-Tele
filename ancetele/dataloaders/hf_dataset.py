@@ -6,13 +6,6 @@ from ..arguments import DataArguments
 
 DEFAULT_PROCESSORS = [TrainPreProcessor, QueryPreProcessor, CorpusPreProcessor]
 PROCESSOR_INFO = {
-    'Tevatron/wikipedia-nq': DEFAULT_PROCESSORS,
-    'Tevatron/wikipedia-trivia': DEFAULT_PROCESSORS,
-    'Tevatron/wikipedia-curated': DEFAULT_PROCESSORS,
-    'Tevatron/wikipedia-wq': DEFAULT_PROCESSORS,
-    'Tevatron/wikipedia-squad': DEFAULT_PROCESSORS,
-    'Tevatron/scifact': DEFAULT_PROCESSORS,
-    'Tevatron/msmarco-passage': DEFAULT_PROCESSORS,
     'json': [None, None, None]
 }
 

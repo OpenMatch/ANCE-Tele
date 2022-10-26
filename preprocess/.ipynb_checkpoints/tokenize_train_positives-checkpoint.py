@@ -13,7 +13,7 @@ import sys
 sys.path.append("..")
 ## ------- Modified by SS.
 
-from tevatron.preprocessor import MarcoPassageTrainPreProcessor as TrainPreProcessor
+from ancetele.preprocessor import MarcoPassageTrainPreProcessor as TrainPreProcessor
 
 
 def get_passage(p, collection, tokenizer, max_length=128):

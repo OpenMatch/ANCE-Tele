@@ -15,12 +15,12 @@ from transformers.integrations import TensorBoardCallback
 # sys.path.append(os.getcwd()) ## cloud
 # ## ------- Modified by SS.
 
-from tevatron.arguments import ModelArguments, DataArguments
-from tevatron.arguments import DenseTrainingArguments as TrainingArguments
-from tevatron import trainers
-from tevatron import utils
-from tevatron import networks
-from tevatron import dataloaders
+from arguments import ModelArguments, DataArguments
+from arguments import DenseTrainingArguments as TrainingArguments
+from ancetele import trainers
+from ancetele import utils
+from ancetele import networks
+from ancetele import dataloaders
 
 logger = logging.getLogger(__name__)
 

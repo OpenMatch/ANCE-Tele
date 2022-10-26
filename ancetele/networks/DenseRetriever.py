@@ -17,8 +17,8 @@ import sys
 sys.path.append("..")
 ## ------- Modified by SS.
 
-from tevatron.arguments import ModelArguments, DataArguments
-from tevatron.arguments import DenseTrainingArguments as TrainingArguments
+from ancetele.arguments import ModelArguments, DataArguments
+from ancetele.arguments import DenseTrainingArguments as TrainingArguments
 
 
 import logging
