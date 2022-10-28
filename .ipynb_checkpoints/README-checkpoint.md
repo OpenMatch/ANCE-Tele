@@ -38,6 +38,30 @@ You thus can easily reproduce ANCE-Tele about one day with only an A100 😉. (O
 
 ## Requirements
 
+ANCE-Tele is tested on Python 3.8+, PyTorch 1.8+, and CUDA Version 10.2/11.1.
+
+[1] Create a new Anaconda environment
+
+```
+conda create --name ancetele python=3.8
+conda activate ancetele
+```
+
+[2] Install the following packages use Pip or Conda
+```
+transformers==4.9.2
+datasets==1.11.0
+pytorch==1.8.0
+
+faiss-gpu==1.7.2
+## faiss-gpu is depend on the CUDA version
+## conda install faiss-gpu cudatoolkit=11.1
+## conda install faiss-gpu cudatoolkit=10.2
+
+openjdk==11
+pyserini ## pyserini is depend on openjdk
+```
+
 
 ## Download Data & CheckPs
 
