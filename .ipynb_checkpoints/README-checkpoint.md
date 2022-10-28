@@ -1,6 +1,8 @@
 # ANCE-Tele
 
-This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Conference paper **"Reduce Catastrophic Forgetting of Dense Retrieval Training with Teleportation Negatives"**. If you find this work useful, please cite our paper 🤗 and give a star to our repo ⭐️ ~ 
+This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Conference paper **"Reduce Catastrophic Forgetting of Dense Retrieval Training with Teleportation Negatives"**. 
+
+If you find this work useful, please cite our paper 🤗 and give a star to our repo ⭐️ ~ 
 
 ```
 @inproceedings{sun2022ancetele,
