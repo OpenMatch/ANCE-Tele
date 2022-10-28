@@ -1,12 +1,6 @@
 # ANCE-Tele
 
-ANCE-Tele is a simple and efficient DR training method that introduces teleportation (momentum and lookahead) negatives to smooth the learning process, leading to improved training stability, convergence speed, and reduced catastrophic forgetting.
-
-<img src="framework.jpeg">
-
-On web search and OpenQA, ANCE-Tele is competitive among systems using significantly more (50x) parameters, and eliminates the dependency on additional negatives (e.g., BM25, other DR systems), filtering strategies, and distillation modules. You thus can easily reproduce ANCE-Tele about one day with only an A100 😉. (Of course, 2080Ti is also possible but with more time).
-
-The main conference of EMNLP 2022 has accepted ANCE-Tele. If you find this work useful, please cite our paper and give a star to our repo ⭐️. Thank You ~ 
+This is the official implementation of ANCE-Tele described in the EMNLP 2022 (main conference) paper **Reduce Catastrophic Forgetting of Dense Retrieval Training with Teleportation Negatives**. If you find this work useful, please cite our paper and give a star to our repo ⭐️. Thank You ~ 
 
 ```
 @inproceedings{sun2022ancetele,
@@ -16,6 +10,13 @@ The main conference of EMNLP 2022 has accepted ANCE-Tele. If you find this work 
   year={2022}
 }
 ```
+## Overview
+
+<img src="framework.jpeg">
+
+ANCE-Tele is a simple and efficient DR training method that introduces teleportation (momentum and lookahead) negatives to smooth the learning process, leading to improved training stability, convergence speed, and reduced catastrophic forgetting.
+
+On web search and OpenQA, ANCE-Tele is competitive among systems using significantly more (50x) parameters, and eliminates the dependency on additional negatives (e.g., BM25, other DR systems), filtering strategies, and distillation modules. You thus can easily reproduce ANCE-Tele about one day with only an A100 😉. (Of course, 2080Ti is also possible but with more time).
 
 ## Environment
 
