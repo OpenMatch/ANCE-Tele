@@ -10,6 +10,8 @@ This is the official implementation of ANCE-Tele described in the EMNLP 2022 (ma
   year={2022}
 }
 ```
+
+
 ## Overview
 
 <img src="framework.jpeg">
@@ -135,3 +137,14 @@ tensorboardX==2.5.1
   ```
   bash shells/train-epi-3.sh
   ```
+
+
+
+## Contact
+
+For any question, feel free to create an issue, and we will try our best to solve. If the problem is more urgent, you can send an email to me at the same time 🤗.
+
+```
+NAME: Si Sun
+EMAIL: s-sun17@mails.tsinghua.edu.cn
+```
