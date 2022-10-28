@@ -10,19 +10,17 @@ This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Confer
   year={2022}
 }
 ```
-## Quick Link
+## Outline
 
 - [ANCE-Tele](#ance-tele)
   - [Overview](#overview)
   - [Requirements](#requirements)
-  - [Download Data & CheckPs](#download-data-checkps)
-  - [Reproduce w/ Our CheckPs](#reproduce-w/-our-checkps)
-  - [Reproduce w/ Our Training Data](#reproduce-w/-our-training-data)
-  - [Reproduce MS MARCO from Scratch](#reproduce-ms-marco-from-scratch)
-  - [Reproduce NQ from Scratch](#reproduce-nq-from-scratch)
-  - [Reproduce TriviaQA from Scratch](#reproduce-triviaqa-from-scratch)
+  - [Reproduce MS MARCO Results](#reproduce-ms-marco-results)
+  - [Reproduce NQ Results](#reproduce-nq-results)
+  - [Reproduce TriviaQA Results](#reproduce-triviaqa-results)
   - [Contact Us](#acknowledgement)
   - [Acknowledgement](#acknowledgement)
+
   
 
 ## Overview
@@ -40,14 +38,14 @@ You thus can easily reproduce ANCE-Tele about one day with only an A100 😉. (O
 
 ANCE-Tele is tested on Python 3.8+, PyTorch 1.8+, and CUDA Version 10.2/11.1.
 
-[1] Create a new Anaconda environment
+[1] Create a new Anaconda environment:
 
 ```
 conda create --name ancetele python=3.8
 conda activate ancetele
 ```
 
-[2] Install the following packages use Pip or Conda
+[2] Install the following packages using Pip or Conda under this environment:
 ```
 transformers==4.9.2
 datasets==1.11.0
