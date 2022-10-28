@@ -56,6 +56,18 @@ You thus can easily reproduce ANCE-Tele about one day with only an A100 😉. (O
 
 
 
+## Contact Us
+
+For any question, feel free to create an issue, and we will try our best to solve. If the problem is more urgent, you can send an email to me at the same time 🤗.
+
+```
+NAME: Si Sun
+EMAIL: s-sun17@mails.tsinghua.edu.cn
+```
+
+## Acknowledgement
+
+
 ## Environment
 
 ```
@@ -172,13 +184,3 @@ tensorboardX==2.5.1
   bash shells/train-epi-3.sh
   ```
 
-
-
-## Contact
-
-For any question, feel free to create an issue, and we will try our best to solve. If the problem is more urgent, you can send an email to me at the same time 🤗.
-
-```
-NAME: Si Sun
-EMAIL: s-sun17@mails.tsinghua.edu.cn
-```
