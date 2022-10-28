@@ -22,6 +22,40 @@ On web search and OpenQA, ANCE-Tele is competitive among systems using significa
  
 You thus can easily reproduce ANCE-Tele about one day with only an A100 😉. (Of course, 2080Ti is also possible but with more time). Let's begin !
 
+
+
+## Outline
+
+- [ANCE-Tele](#ance-tele)
+  - [Requirements](#requirements)
+  - [Download Data & CheckPs](#download-data-checkps)
+  - [Reproduce w/ Our CheckPs](#reproduce-w/-our-checkps)
+  - [Reproduce w/ Our Training Data](#reproduce-w/-our-training-data)
+  - [Reproduce MS MARCO from Scratch](#reproduce-ms-marco-from-scratch)
+  - [Reproduce NQ from Scratch](#reproduce-nq-from-scratch)
+  - [Reproduce TriviaQA from Scratch](#reproduce-triviaqa-from-scratch)
+  - [Contact Us](#acknowledgement)
+  - [Acknowledgement](#acknowledgement)
+
+## Requirements
+
+
+## Download Data & CheckPs
+
+## Reproduce w/ Our CheckPs
+
+## Reproduce w/ Our Training Data
+
+
+## Reproduce MS MARCO from Scratch
+
+## Reproduce NQ from Scratch
+
+
+## Reproduce TriviaQA from Scratch
+
+
+
 ## Environment
 
 ```
