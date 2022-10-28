@@ -1,5 +1,19 @@
 # ANCE-Tele
 
+ANCE-Tele, a simple and efficient Dense Retrieval (DR) training method, eliminates the dependency on additional training negatives (e.g., BM25, other DR models), negative filtering strategies, and distillation modules and achieves comparable retrieval performance to systems using significantly more (50x) parameters on Web search and OpenQA.
+
+You can easily reproduce ANCE-Tele in one day with only an A100 😉. (of course, 2080 is also possible but with more time).
+
+The main conference of EMNLP 2022 has accepted ANCE-Tele. If you find this work useful, please cite our paper and give a star to our repo ⭐️. Thank You ~ 
+
+```
+@inproceedings{sun2022ancetele,
+  title={Reduce Catastrophic Forgetting of Dense Retrieval Training with Teleportation Negatives},
+  author={Si Sun, Chenyan Xiong, Yue Yu, Arnold Overwijk, Zhiyuan Liu and Jie Bao},
+  booktitle={Proceedings of EMNLP 2022},
+  year={2022}
+}
+```
 
 ## Environment
 
