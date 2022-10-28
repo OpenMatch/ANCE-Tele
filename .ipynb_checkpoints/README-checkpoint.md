@@ -1,12 +1,10 @@
 # ANCE-Tele
 
-ANCE-Tele is a simple and efficient DR training method that introduces teleportation (momentum and lookahead) negatives to smooth the learning process, improving training stability, convergence speed, and reduced catastrophic forgetting. 
+ANCE-Tele is a simple and efficient DR training method that introduces teleportation (momentum and lookahead) negatives to smooth the learning process, improving training stability, convergence speed, and reduced catastrophic forgetting. You can easily reproduce ANCE-Tele in one day with only an A100 😉. (Of course, 2080 is also possible but with more time).
 
 On web search and OpenQA, ANCE-Tele outperforms previous state-of-the-art systems of similar size, eliminates the dependency on additional negatives (e.g., BM25, other DR systems), filtering strategies, and distillation modules, and is competitive among systems using significantly more (50x) parameters. 
 
 <img src="framework.jpeg">
-
-You can easily reproduce ANCE-Tele in one day with only an A100 😉. (of course, 2080 is also possible but with more time).
 
 The main conference of EMNLP 2022 has accepted ANCE-Tele. If you find this work useful, please cite our paper and give a star to our repo ⭐️. Thank You ~ 
 
