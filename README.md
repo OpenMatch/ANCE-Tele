@@ -72,13 +72,13 @@ pyserini ## pyserini is depend on openjdk
 
 ### MARCO: Download
 
-**[1] Download Dataset**
+[1] Download Dataset
 
 |Download Link|Size|
 |:-----|:----|
 |[msmarco.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/msmarco.tar.gz)|~1.0G|
 
-**[2] Uncompress Dataset**
+[2] Uncompress Dataset
 
 Run the command: `tar -zxcf msmarco.tar.gz`. The uncompressed folder contains the following files:
 
@@ -93,7 +93,7 @@ msmarco
 
 ### MARCO: Preprocess
 
-**[1] Tokenize Dataset**
+[1] Tokenize Dataset
 
 Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
@@ -102,13 +102,13 @@ bash tokenize_msmarco.sh
 
 ### MARCO: Reproduce w/ Our CheckPs
 
-**[1] Download our CheckP from HuggingFace:**
+[1] Download our CheckP from HuggingFace:
 
 |Download Link|Size|Dev MRR@10|
 |:-----|:----|:----:|
 |[ance-tele_msmarco_qry-psg-encoder](https://huggingface.co/OpenMatch/ance-tele_msmarco_qry-psg-encoder)|~438M|39.1|
 
-**[2] Encoder & Search MS MARCO using our CheckP:**
+[2] Encoder & Search MS MARCO using our CheckP:
 
 Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
@@ -125,14 +125,14 @@ P.S. We support multi-gpus to encode the MARCO corpus, which is split into 10 fi
 
 ### MARCO: Reproduce w/ Our Episode-3 Training Negatives
 
-**[1] Download vanilla pre-trained model & our Epi-3 training negatives:**
+[1] Download vanilla pre-trained model & our Epi-3 training negatives:
 
 |Download Link|Size|
 |:-----|:----|
 |[co-condenser-marco](https://huggingface.co/Luyu/co-condenser-marco)|~473M|
 |[ance-tele_msmarco_tokenized-train-data.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/ance-tele_msmarco_tokenized-train-data.tar.gz)|~8.8G|
 
-**[2] Uncompress our Epi-3 training negatives:**
+[2] Uncompress our Epi-3 training negatives:
 
 Run the command: `tar -zxcf ance-tele_msmarco_tokenized-train-data.tar.gz`. The uncompressed folder contains 12 sub-files {split00-11.hn.json}. The format of each file is as follows:
 ```
@@ -143,7 +143,7 @@ Run the command: `tar -zxcf ance-tele_msmarco_tokenized-train-data.tar.gz`. The 
 }
 ```
 
-**[3] Train ANCE-Tele using our Epi-3 training negtatives**
+[3] Train ANCE-Tele using our Epi-3 training negtatives
 
 Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
@@ -170,7 +170,7 @@ If your CUDA memory is limited, please use [Gradient Caching](https://arxiv.org/
 ```
 
 
-**[4] Evaluate your ANCE-Tele**
+[4] Evaluate your ANCE-Tele
 
 After training for 3 epochs, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#MARCO:-reproduce-w/-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
@@ -188,7 +188,7 @@ ANCE-Tele takes a quick refreshing strategy for hard negative mining. Hence, Epi
 Every episode also adopts **train from scratch** mode, that is, each episode uses the vanilla pretrained model as the initial model, and the only difference is the training negatives. In this way, only the final training negatives are required to reproduce the results without relying on the intermediate CheckPs.
 
 
-**[1] Epi-1**
+[1] Epi-1
 
 First mine the Tele-negatives using the the vanilla *co-condenser-marco*. In Epi-1 , Tele-negatives contain ANN-negatives and Lookahead-negatives (LA-Neg) without Momentum.
 
@@ -200,7 +200,7 @@ Then train the vanilla *co-condenser-marco* with the Epi-1 Tele-negatives and ea
 bash epi-1-train-msmarco.sh
 ```
 
-**[2] Epi-2**
+[2] Epi-2
 
 For Epi-2, mine Tele-negatives using the Epi-1 trained model. Epi-2 Tele-negatives contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-1 training negatives).
 
@@ -212,7 +212,7 @@ Then train the vanilla *co-condenser-marco* with the Epi-2 Tele-negatives and ea
 bash epi-2-train-msmarco.sh
 ```
 
-**[3] Epi-3**
+[3] Epi-3
 
 For last Epi-3, mine Tele-negatives using the Epi-2 trained model. Epi-3 Tele-negatives contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-2 training negatives).
 
@@ -224,7 +224,7 @@ Then train the vanilla *co-condenser-marco* with the Epi-3 Tele-negatives. This 
 bash epi-3-train-msmarco.sh
 ```
 
-**[4] Evaluate your ANCE-Tele**
+[4] Evaluate your ANCE-Tele
 
 After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#MARCO:-reproduce-w/-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
