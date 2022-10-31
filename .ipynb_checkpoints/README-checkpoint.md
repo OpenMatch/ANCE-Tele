@@ -63,12 +63,12 @@ pyserini ## pyserini is depend on openjdk
 
 ## Reproduce MS MARCO Results
 
-- [Reproduce MS MARCO Results](#reproduce-ms-marco-results)
+- [MS MARCO Quick Link](#reproduce-ms-marco-results)
   - [MARCO: Download](#marco-download)
-  - [MARCO: Preprocess](#marco:-preprocess)
-  - [MARCO: Reproduce w/ Our CheckPs](#marco:-reproduce-w/-our-checkps)
-  - [MARCO: Reproduce w/ Our Episode-3 Training Negatives](#marco:-reproduce-w/-our-episode-3-training-negatives)
-  - [MARCO: Reproduce from Scratch (Episode 1->2->3)](#marco:-reproduce-from-scratch-(episode-1->2->3))
+  - [MARCO: Preprocess](#marco-preprocess)
+  - [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-w/-our-checkps)
+  - [MARCO: Reproduce w/ Our Episode-3 Training Negatives](#marco-reproduce-w/-our-episode-3-training-negatives)
+  - [MARCO: Reproduce from Scratch (Episode 1->2->3)](#marco-reproduce-from-scratch-(episode-1->2->3))
 
 
 ### MARCO Download
@@ -92,7 +92,7 @@ msmarco
   └── qrels.dev.small.tsv  # <FORMAT> qry_id /t 0 /t pos_psg_id /t 1
 ```
 
-### MARCO: Preprocess
+### MARCO Preprocess
 
 [1] Tokenize Dataset
 
@@ -101,7 +101,7 @@ Enter the folder `ANCE-Tele/shells` and run the shell script:
 bash tokenize_msmarco.sh
 ```
 
-### MARCO: Reproduce w/ Our CheckPs
+### MARCO Reproduce w/ Our CheckPs
 
 [1] Download our CheckP from HuggingFace:
 
@@ -124,7 +124,7 @@ P.S. We support multi-gpus to encode the MARCO corpus, which is split into 10 fi
 * You can of course also use Faiss-CPU search: (1) do not use `--use_gpu` and set `--batch_size -1`.
 
 
-### MARCO: Reproduce w/ Our Episode-3 Training Negatives
+### MARCO Reproduce w/ Our Episode-3 Training Negatives
 
 [1] Download vanilla pre-trained model & our Epi-3 training negatives:
 
@@ -173,11 +173,11 @@ If your CUDA memory is limited, please use [Gradient Caching](https://arxiv.org/
 
 [4] Evaluate your ANCE-Tele
 
-After training for 3 epochs, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#MARCO:-reproduce-w/-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
+After training for 3 epochs, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-w/-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
 
 
-### MARCO: Reproduce from Scratch (Episode 1->2->3)
+### MARCO Reproduce from Scratch (Episode 1->2->3)
 
 If you want to reproduce ANCE-Tele from scratch (Epi->2->3), you just need to prepare the vanilla pretrained model [co-condenser-marco](https://huggingface.co/Luyu/co-condenser-marco).
 
@@ -220,14 +220,14 @@ For last Epi-3, mine Tele-negatives using the Epi-2 trained model. Epi-3 Tele-ne
 ```
 bash epi-3-mine-msmarco.sh
 ```
-Then train the vanilla *co-condenser-marco* with the Epi-3 Tele-negatives. This step is the same as introduced in [MARCO: Reproduce w/ Our Episode 3 Training Negatives](#reproduce-w/-our-training-data):
+Then train the vanilla *co-condenser-marco* with the Epi-3 Tele-negatives. This step is the same as introduced in [MARCO: Reproduce w/ Our Episode-3 Training Negatives](#marco-reproduce-w/-our-episode-3-training-negatives):
 ```
 bash epi-3-train-msmarco.sh
 ```
 
 [4] Evaluate your ANCE-Tele
 
-After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#MARCO:-reproduce-w/-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
+After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-w/-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
 
 ## Easy-to-Use Tips
