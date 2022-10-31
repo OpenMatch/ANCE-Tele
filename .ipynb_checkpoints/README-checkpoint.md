@@ -63,14 +63,15 @@ pyserini ## pyserini is depend on openjdk
 
 ## Reproduce MS MARCO Results
 
-- [MARCO: Download](#marco:-download)
-- [MARCO: Preprocess](#marco:-preprocess)
-- [MARCO: Reproduce w/ Our CheckPs](#marco:-reproduce-w/-our-checkps)
-- [MARCO: Reproduce w/ Our Episode-3 Training Negatives](#marco:-reproduce-w/-our-episode-3-training-negatives)
-- [MARCO: Reproduce from Scratch (Episode 1->2->3)](#marco:-reproduce-from-scratch-(episode-1->2->3))
+- [Reproduce MS MARCO Results](#reproduce-ms-marco-results)
+  - [MARCO: Download](#marco-download)
+  - [MARCO: Preprocess](#marco:-preprocess)
+  - [MARCO: Reproduce w/ Our CheckPs](#marco:-reproduce-w/-our-checkps)
+  - [MARCO: Reproduce w/ Our Episode-3 Training Negatives](#marco:-reproduce-w/-our-episode-3-training-negatives)
+  - [MARCO: Reproduce from Scratch (Episode 1->2->3)](#marco:-reproduce-from-scratch-(episode-1->2->3))
 
 
-### MARCO: Download
+### MARCO Download
 
 [1] Download Dataset
 
