@@ -8,7 +8,10 @@ import torch
 from torch.utils.data import DataLoader
 import torch.distributed as dist
 
-from ..losses import SimpleContrastiveLoss, DistributedContrastiveLoss
+
+import sys 
+sys.path.append("..")
+from losses import SimpleContrastiveLoss, DistributedContrastiveLoss
 
 import logging
 logger = logging.getLogger(__name__)
@@ -17,7 +20,7 @@ logger = logging.getLogger(__name__)
 # _grad_cache_available = True
 
 try:
-    from ..grad_cache import GradCache
+    from grad_cache import GradCache
     _grad_cache_available = True
 except ModuleNotFoundError:
     _grad_cache_available = False

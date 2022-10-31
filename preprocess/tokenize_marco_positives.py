@@ -1,21 +1,26 @@
-from argparse import ArgumentParser
-from transformers import AutoTokenizer
 import os
+import csv
 import json
 import random
 import datasets
 from tqdm import tqdm
 from datetime import datetime
 from multiprocessing import Pool
+from argparse import ArgumentParser
+from transformers import AutoTokenizer
 
-## ------- Modified by SS.
-import sys
-sys.path.append("..")
-## ------- Modified by SS.
-
-from ancetele.preprocessor import MarcoPassageTrainPreProcessor as TrainPreProcessor
-
-
+def read_qrel(relevance_file):
+    qrel = {}
+    with open(relevance_file, encoding='utf8') as f:
+        tsvreader = csv.reader(f, delimiter="\t")
+        for [topicid, _, docid, rel] in tsvreader:
+            assert rel == "1"
+            if topicid in qrel:
+                qrel[topicid].append(docid)
+            else:
+                qrel[topicid] = [docid]
+    return qrel
+    
 def get_passage(p, collection, tokenizer, max_length=128):
     entry = collection[int(p)]
     title = entry['title']
@@ -43,7 +48,7 @@ if __name__ == "__main__":
     queries_path = os.path.join(args.data_dir, "train.query.txt")
     collection_path = os.path.join(args.data_dir, "corpus.tsv")
     
-    qrel = TrainPreProcessor.read_qrel(os.path.join(args.data_dir, "qrels.train.tsv"))
+    qrel = read_qrel(os.path.join(args.data_dir, "qrels.train.tsv"))
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_name, use_fast=True)
     
     collection = datasets.load_dataset(
@@ -55,7 +60,7 @@ if __name__ == "__main__":
     )['train']
     
     with open(args.save_to, 'w') as jfile:
-        for qid, docids in qrel.items():
+        for qid, docids in tqdm(qrel.items()):
             text_encoded = get_passage(docids[0], collection, tokenizer, max_length=args.truncate)
             encoded = {
                 'text_id': qid,

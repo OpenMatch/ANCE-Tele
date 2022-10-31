@@ -34,18 +34,6 @@ class ModelArguments:
     projection_in_dim: int = field(default=768)
     projection_out_dim: int = field(default=768)
         
-        
-    ## SS Modified ----------------
-    cross_encoder: bool = field(
-        default=False,
-        metadata={"help": "cross encodes qry and passage"}
-    )
-    bitfit: bool = field(
-        default=False,
-        metadata={"help": "only tune bias"}
-    )
-    ## SS Modified ----------------
-
 
 @dataclass
 class DataArguments:
@@ -95,9 +83,6 @@ class DataArguments:
     eval_cache_dir: Optional[str] = field(
         default=None, metadata={"help": "Where do you want to store the eval data downloaded from huggingface, if None, repeated download"}
     )
-    ## iclr method
-    temperature: float = field(default=0.5)
-    tau_plus: float = field(default=0.1)
         
     ## split load
     split_load_data: bool = field(default=False)

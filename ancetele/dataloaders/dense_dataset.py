@@ -11,8 +11,10 @@ from transformers import (
     DataCollatorWithPadding
 )
 
-from ..arguments import DataArguments
-from ..trainers import DenseTrainer
+import sys 
+sys.path.append("..")
+from arguments import DataArguments
+from trainers import DenseTrainer
 # from .trainer import DenseTrainer
 
 import logging

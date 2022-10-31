@@ -15,12 +15,19 @@ from transformers.integrations import TensorBoardCallback
 # sys.path.append(os.getcwd()) ## cloud
 # ## ------- Modified by SS.
 
+# from arguments import ModelArguments, DataArguments
+# from arguments import DenseTrainingArguments as TrainingArguments
+# from ancetele import trainers
+# from ancetele import utils
+# from ancetele import networks
+# from ancetele import dataloaders
+
 from arguments import ModelArguments, DataArguments
 from arguments import DenseTrainingArguments as TrainingArguments
-from ancetele import trainers
-from ancetele import utils
-from ancetele import networks
-from ancetele import dataloaders
+import trainers
+import networks
+import dataloaders
+
 
 logger = logging.getLogger(__name__)
 
@@ -131,13 +138,11 @@ def main():
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
-        compute_metrics=utils.compute_reranking if model_args.cross_encoder else None,
         data_collator=QPCollator(
             tokenizer,
             max_p_len=data_args.p_max_len,
             max_q_len=data_args.q_max_len
         ),
-        is_cross_encoder=model_args.cross_encoder,
         callbacks=callbacks,
     )
             

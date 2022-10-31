@@ -49,7 +49,7 @@ do
         echo ${OUTPUT_DIR}/${train_job_name} &&
         echo split-${i} on gpu-${CUDA} &&
 
-        CUDA_VISIBLE_DEVICES=${CUDA} python ../encode.py \
+        CUDA_VISIBLE_DEVICES=${CUDA} python ../ancetele/encode.py \
         --output_dir ${OUTPUT_DIR}/${infer_job_name} \
         --model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
         --fp16 \
@@ -67,7 +67,7 @@ done
 ## *************************************
 ## Encoding Train query
 ## *************************************
-CUDA_VISIBLE_DEVICES=${CUDAs[-1]} python ../encode.py \
+CUDA_VISIBLE_DEVICES=${CUDAs[-1]} python ../ancetele/encode.py \
 --output_dir ${OUTPUT_DIR}/${infer_job_name} \
 --model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
 --fp16 \
@@ -107,7 +107,7 @@ python ../preprocess/build_train_hn.py \
 ## *************************************
 ## Encoding Train-Positives
 ## *************************************
-CUDA_VISIBLE_DEVICES=${CUDAs[-1]} python ../encode.py \
+CUDA_VISIBLE_DEVICES=${CUDAs[-1]} python ../ancetele/encode.py \
 --output_dir ${OUTPUT_DIR}/${infer_job_name} \
 --model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
 --fp16 \

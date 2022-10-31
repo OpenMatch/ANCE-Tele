@@ -4,6 +4,27 @@ import datasets
 from transformers import PreTrainedTokenizer
 from dataclasses import dataclass
 
+@dataclass
+class SimpleCollectionPreProcessor:
+    tokenizer: PreTrainedTokenizer
+    separator: str = '\t'
+    max_length: int = 128
+
+    def process_line(self, line: str):
+        xx = line.strip().split(self.separator)
+        text_id, text = xx[0], xx[1:]
+        text_encoded = self.tokenizer.encode(
+            self.tokenizer.sep_token.join(text),
+            add_special_tokens=False,
+            max_length=self.max_length,
+            truncation=True
+        )
+        encoded = {
+            'text_id': text_id,
+            'text': text_encoded
+        }
+        return json.dumps(encoded)
+
 
 @dataclass
 class SimpleTrainPreProcessor:
@@ -82,25 +103,3 @@ class SimpleTrainPreProcessor:
         }
 
         return json.dumps(train_example)
-
-
-@dataclass
-class SimpleCollectionPreProcessor:
-    tokenizer: PreTrainedTokenizer
-    separator: str = '\t'
-    max_length: int = 128
-
-    def process_line(self, line: str):
-        xx = line.strip().split(self.separator)
-        text_id, text = xx[0], xx[1:]
-        text_encoded = self.tokenizer.encode(
-            self.tokenizer.sep_token.join(text),
-            add_special_tokens=False,
-            max_length=self.max_length,
-            truncation=True
-        )
-        encoded = {
-            'text_id': text_id,
-            'text': text_encoded
-        }
-        return json.dumps(encoded)

@@ -25,7 +25,7 @@ SplitNum=10
 ## **********************************************
 ## Train
 ## **********************************************
-CUDA_VISIBLE_DEVICES=${TOT_CUDA} python ../train.py \
+CUDA_VISIBLE_DEVICES=${TOT_CUDA} python ../ancetele/train.py \
 --output_dir ${OUTPUT_DIR}/${train_job_name} \
 --model_name_or_path ${OUTPUT_DIR}/${prev_train_job_name} \
 --fp16 \
@@ -40,7 +40,7 @@ CUDA_VISIBLE_DEVICES=${TOT_CUDA} python ../train.py \
 # # **********************************************
 # # Dist Train
 # # **********************************************
-# CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=2 python -m torch.distributed.launch --nproc_per_node=${CUDA_NUM} --master_port=${PORT} ../train.py \
+# CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=2 python -m torch.distributed.launch --nproc_per_node=${CUDA_NUM} --master_port=${PORT} ../ancetele/train.py \
 # --output_dir ${OUTPUT_DIR}/${train_job_name} \
 # --model_name_or_path ${OUTPUT_DIR}/${prev_train_job_name} \
 # --fp16 \
@@ -79,7 +79,7 @@ do
         echo ${OUTPUT_DIR}/${train_job_name} &&
         echo split-${i} on gpu-${CUDA} &&
 
-        CUDA_VISIBLE_DEVICES=${CUDA} python ../encode.py \
+        CUDA_VISIBLE_DEVICES=${CUDA} python ../ancetele/encode.py \
         --output_dir ${OUTPUT_DIR}/${infer_job_name} \
         --model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
         --fp16 \
@@ -97,7 +97,7 @@ done
 ## *************************************
 ## Encoding Dev query
 ## *************************************
-CUDA_VISIBLE_DEVICES=${CUDAs[-1]} python ../encode.py \
+CUDA_VISIBLE_DEVICES=${CUDAs[-1]} python ../ancetele/encode.py \
 --output_dir ${OUTPUT_DIR}/${infer_job_name} \
 --model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
 --fp16 \

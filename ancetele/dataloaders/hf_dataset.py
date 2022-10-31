@@ -2,7 +2,10 @@ import os
 from datasets import load_dataset, concatenate_datasets
 from transformers import PreTrainedTokenizer
 from .dataset_utils import TrainPreProcessor, QueryPreProcessor, CorpusPreProcessor
-from ..arguments import DataArguments
+
+import sys 
+sys.path.append("..")
+from arguments import DataArguments
 
 DEFAULT_PROCESSORS = [TrainPreProcessor, QueryPreProcessor, CorpusPreProcessor]
 PROCESSOR_INFO = {
