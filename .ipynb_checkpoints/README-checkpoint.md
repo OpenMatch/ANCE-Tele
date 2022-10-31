@@ -130,9 +130,11 @@ P.S. We support multi-gpus to encode the MARCO corpus, which is split into 10 fi
 |Download Link|Size|
 |:-----|:----|
 |[co-condenser-marco](https://huggingface.co/Luyu/co-condenser-marco)|~473M|
-|ance-tele_msmarco_tokenized-train-data.tar.gz||
+|[ance-tele_msmarco_tokenized-train-data.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/ance-tele_msmarco_tokenized-train-data.tar.gz)|~8.8G|
 
-P.S. The folder contains 12 sub-files {split00-11.hn.json}. The format of each file is as follows:
+**[2] Uncompress our Epi-3 training negatives:**
+
+Run the command: `tar -zxcf ance-tele_msmarco_tokenized-train-data.tar.gz`. The uncompressed folder contains 12 sub-files {split00-11.hn.json}. The format of each file is as follows:
 ```
 {
   "query": [train-query tokenized ids],
@@ -141,7 +143,7 @@ P.S. The folder contains 12 sub-files {split00-11.hn.json}. The format of each f
 }
 ```
 
-**[2] Train ANCE-Tele using our Epi-3 training negtatives**
+**[3] Train ANCE-Tele using our Epi-3 training negtatives**
 
 Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
@@ -168,7 +170,7 @@ If your CUDA memory is limited, please use [Gradient Caching](https://arxiv.org/
 ```
 
 
-**[3] Evaluate your ANCE-Tele**
+**[4] Evaluate your ANCE-Tele**
 
 After training for 3 epochs, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#MARCO:-reproduce-w/-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
