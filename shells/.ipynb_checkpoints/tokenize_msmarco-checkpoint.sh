@@ -1,7 +1,7 @@
 ## *************************************************
 ## Tokenize MS MARCO Dataset
 ## *************************************************
-DATA_DIR=/home/sunsi/dataset/msmarco/msmarco
+DATA_DIR=/home/sunsi/dataset/msmarco
 TOKENIZER=bert-base-uncased
 TOKENIZER_ID=bert
 

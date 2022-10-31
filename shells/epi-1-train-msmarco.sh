@@ -1,4 +1,4 @@
-export DATA_DIR=/home/sunsi/dataset/msmarco/msmarco
+export DATA_DIR=/home/sunsi/dataset/msmarco
 export OUTPUT_DIR=/home/sunsi/experiments/msmarco-results
 ## *************************************
 ## INPUT
