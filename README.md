@@ -66,7 +66,7 @@ pyserini ## pyserini is depend on openjdk
 - [MS MARCO Quick Link](#reproduce-ms-marco-results)
   - [MARCO: Download](#marco-download)
   - [MARCO: Preprocess](#marco-preprocess)
-  - [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-w/-our-checkps)
+  - [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-w-/-our-checkps)
   - [MARCO: Reproduce w/ Our Episode-3 Training Negatives](#marco-reproduce-w/-our-episode-3-training-negatives)
   - [MARCO: Reproduce from Scratch (Episode 1->2->3)](#marco-reproduce-from-scratch-(episode-1->2->3))
 
