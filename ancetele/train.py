@@ -7,7 +7,7 @@ from transformers import (
     HfArgumentParser,
     set_seed,
 )
-from transformers.integrations import TensorBoardCallback
+from transformers.integrations import TrainerCallback, TensorBoardCallback
 
 # ## ------- Modified by SS.
 # import sys
@@ -31,25 +31,17 @@ import dataloaders
 
 logger = logging.getLogger(__name__)
 
-def deactivate_relevant_gradients(model, trainable_components=['bias']):
-    """Turns off the model parameters requires_grad except the trainable_components.
-    Args:
-        trainable_components (List[str]): list of trainable components (the rest will be deactivated)
-    """
-    i = 0
-    num = 0
-    for param in model.parameters():
-        param.requires_grad = False
-        num += 1
-    if trainable_components:
-        trainable_components = trainable_components + ['pooler.dense.bias']
-    for name, param in model.named_parameters():
-        for component in trainable_components:
-            if component in name:
-                param.requires_grad = True
-                i += 1
-                break
-    print("only tune %d params took %.2f percent"%(i, (i/num)*100))
+
+class MyStopTrainCallback(TrainerCallback):
+    "A callback that prints a message at the end of training step"
+
+    def on_step_end(self, args, state, control, **kwargs):
+        if state.global_step == args.early_stop_step:
+            logger.info("End training at step: %d", state.global_step)
+            control.should_training_stop = True
+            
+        return control
+        
 
 def main():
     parser = HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
@@ -105,32 +97,30 @@ def main():
         use_fast=False,
     )
 
-    ## Model (dense or cross)
+    ## Model
     model = networks.get_network(
         model_args,
         data_args,
         training_args,
         config=config,
         cache_dir=model_args.cache_dir,
-        is_cross_encoder=model_args.cross_encoder,
         do_train=True,
     )
-    
-    if model_args.bitfit:
-        print("setting bitfit ...")
-        deactivate_relevant_gradients(model)
 
     ## Train dataset and batchfy
     train_dataset, eval_dataset, QPCollator = dataloaders.get_train_dataset(
         tokenizer=tokenizer, 
         data_args=data_args,
-        is_cross_encoder=model_args.cross_encoder,
     )
     
-    ## tensorboard
-    callbacks = None
+    ## early-stop or tensorboard
+    callbacks = []
+    if training_args.early_stop_step > 0:
+        logger.info("Setting early stop step at: %d", training_args.early_stop_step)
+        callbacks.append(MyStopTrainCallback)
     if training_args.tensorboard:
-        callbacks = [TensorBoardCallback()]
+        logger.info("Setting Tensorboard ...")
+        callbacks.append(TensorBoardCallback())
     
     ## training func
     trainer = trainers.get_trainer(

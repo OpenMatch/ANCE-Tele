@@ -1,11 +1,11 @@
-export DATA_DIR=/home/sunsi/dataset/msmarco/msmarco
+export DATA_DIR=/home/sunsi/dataset/msmarco
 export OUTPUT_DIR=/home/sunsi/experiments/msmarco-results
 ## *************************************
-## INPUT
+## INPUT/OUTPUT
 export train_job_name=ance-tele_msmarco_qry-psg-encoder
 export infer_job_name=inference.${train_job_name}
 ## *************************************
-## ENCODE Psg GPUs
+## ENCODE Corpus GPUs
 ENCODE_CUDA="0,1,2,3,4" ## ENCODE_CUDA="0"
 ENCODE_CUDAs=(${ENCODE_CUDA//,/ })
 ENCODE_CUDA_NUM=${#ENCODE_CUDAs[@]}
@@ -16,13 +16,14 @@ TOKENIZER=bert-base-uncased
 TOKENIZER_ID=bert
 SplitNum=10
 ## *************************************
-## Create Folder
-mkdir -p ${OUTPUT_DIR}/${infer_job_name}/corpus
-mkdir -p ${OUTPUT_DIR}/${infer_job_name}/query
 
 ## **********************************************
 ## Infer
 ## **********************************************
+## Create Folder
+mkdir -p ${OUTPUT_DIR}/${infer_job_name}/corpus
+mkdir -p ${OUTPUT_DIR}/${infer_job_name}/query
+
 ## Encoding Corpus
 for((tmp=0; tmp<$SplitNum; tmp+=$ENCODE_CUDA_NUM))
 do
@@ -65,7 +66,7 @@ CUDA_VISIBLE_DEVICES=${ENCODE_CUDAs[-1]} python ../ancetele/encode.py \
 --fp16 \
 --q_max_len 32 \
 --encode_is_qry \
---per_device_eval_batch_size 2048 \
+--per_device_eval_batch_size 1024 \
 --encode_in_path ${DATA_DIR}/${TOKENIZER_ID}/query/dev.query.json \
 --encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/query/qry.pt \
 
@@ -81,12 +82,16 @@ CUDA_VISIBLE_DEVICES=${SEARCH_CUDA} python ../ancetele/faiss_retriever/do_retrie
 --save_text \
 --depth 10 \
 --save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv \
+
 # --sub_split_num 5 \
+# ## if CUDA memory is not enough, set this augments.
 
 
 ## *************************************
 ## Compute Dev MRR@10
 ## *************************************
-python ../driver/score_to_marco.py ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv
-python ../driver/ms_marco_eval.py ${DATA_DIR}/qrels.dev.small.tsv ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv.marco &> \
+python ../scripts/score_to_marco.py ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv
+python ../scripts/ms_marco_eval.py ${DATA_DIR}/qrels.dev.small.tsv ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv.marco &> \
 ${OUTPUT_DIR}/${infer_job_name}/dev_mrr.log
+
+## The Dev MRR@10 resuls are saved in dev_mrr.log

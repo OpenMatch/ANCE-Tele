@@ -1,17 +1,18 @@
-export DATA_DIR=/data/private/sunsi/dataset/msmarco/rocketqa
-export OUTPUT_DIR=/data/private/sunsi/experiments/cocondenser/results
+export DATA_DIR=/home/sunsi/dataset/msmarco
+export OUTPUT_DIR=/home/sunsi/experiments/msmarco-results
 ## *************************************
 ## INPUT
 export prev_train_job_name=co-condenser-marco
 export train_data=ance-tele_msmarco_tokenized-train-data
 ## OUTPUT
-export train_job_name=ance-tele_msmarco_qry-psg-encoder
+export train_job_name=ance-tele_msmarco_qry-psg-encoder_NEW
 export infer_job_name=inference.${train_job_name}
 ## *************************************
-## TRAIN GPU
-TOT_CUDA="0" ## "0,1"
+## TRAIN GPUs
+TOT_CUDA="0" ## multi-gpus: TOT_CUDA="0,1"
 CUDAs=(${TOT_CUDA//,/ })
 CUDA_NUM=${#CUDAs[@]}
+PORT="1234" ## check the port does not occupied
 ## *************************************
 TOKENIZER=bert-base-uncased
 TOKENIZER_ID=bert
@@ -33,6 +34,7 @@ CUDA_VISIBLE_DEVICES=${TOT_CUDA} python ../ancetele/train.py \
 --num_train_epochs 3 \
 --dataloader_num_workers 2 \
 
+
 # # **********************************************
 # # Dist Train
 # # **********************************************
@@ -48,3 +50,14 @@ CUDA_VISIBLE_DEVICES=${TOT_CUDA} python ../ancetele/train.py \
 # --num_train_epochs 3 \
 # --dataloader_num_workers 2 \
 # --negatives_x_device \
+
+
+# # # ********************************************************************
+# # # If Your CUDA Memory is not enough, Please set the following augments
+# # # ********************************************************************
+# --grad_cache \
+# --gc_q_chunk_size 4 \
+# --gc_p_chunk_size 8 \
+
+## Split a batch of queries to several gc_q_chunk_size
+## Split a batch of passages to several gc_p_chunk_size

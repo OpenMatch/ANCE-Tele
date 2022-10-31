@@ -6,7 +6,6 @@ def get_trainer(
     args,
     train_dataset,
     eval_dataset,
-    compute_metrics,
     data_collator,
     callbacks=None,
 ):

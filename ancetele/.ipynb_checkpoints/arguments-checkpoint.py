@@ -138,4 +138,6 @@ class DenseTrainingArguments(TrainingArguments):
     gc_p_chunk_size: int = field(default=32)
         
     ## SS added
+    early_stop_step: int = field(default=-1)
     tensorboard: bool = field(default=False)
+    

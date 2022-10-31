@@ -123,6 +123,6 @@ CUDA_VISIBLE_DEVICES=${TOT_CUDA} python ../tevatron/faiss_retriever/do_retrieval
 ## *************************************
 ## Compute Dev MRR@10
 ## *************************************
-python ../driver/score_to_marco.py ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv
-python ../driver/ms_marco_eval.py ${DATA_DIR}/qrels.dev.small.tsv ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv.marco &> \
+python ../scripts/score_to_marco.py ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv
+python ../scripts/ms_marco_eval.py ${DATA_DIR}/qrels.dev.small.tsv ${OUTPUT_DIR}/${infer_job_name}/dev.rank.tsv.marco &> \
 ${OUTPUT_DIR}/${infer_job_name}/dev_mrr.log
