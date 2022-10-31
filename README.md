@@ -161,7 +161,7 @@ P.S. Multi-GPU training is supported. Please keep the following hyperparameters 
 
 #### Grad Cache Notice
 
-If your CUDA memory is limited, please use [Gradient Caching](https://arxiv.org/pdf/2101.06983.pdf) technique. Set the following augments during training:
+> If your CUDA memory is limited, please use [Gradient Caching](https://arxiv.org/pdf/2101.06983.pdf) technique. Set the following augments during training:
 ```
 --grad_cache \
 --gc_q_chunk_size 4 \
@@ -184,9 +184,9 @@ If you want to reproduce ANCE-Tele from scratch (Epi->2->3), you just need to pr
 
 #### Iterative Training Notice
 
-ANCE-Tele takes a quick refreshing strategy for hard negative mining. Hence, Epi-1,2 just train 1/10 of the total number of training steps (early stop), only the last Epi-3 go through the full training epoch, which greatly reduces the training cost.
+> ANCE-Tele takes a quick refreshing strategy for hard negative mining. Hence, Epi-1,2 just train 1/10 of the total number of training steps (early stop), only the last Epi-3 go through the full training epoch, which greatly reduces the training cost.
 
-Every episode also adopts **train from scratch** mode, that is, each episode uses the vanilla pretrained model as the initial model, and the only difference is the training negatives. In this way, only the final training negatives are required to reproduce the results without relying on the intermediate CheckPs.
+> Every episode also adopts **train from scratch** mode, that is, each episode uses the vanilla pretrained model as the initial model, and the only difference is the training negatives. In this way, only the final training negatives are required to reproduce the results without relying on the intermediate CheckPs.
 
 
 [1] Epi-1
