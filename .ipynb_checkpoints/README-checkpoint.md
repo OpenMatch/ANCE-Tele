@@ -119,9 +119,9 @@ P.S. We support multi-gpus to encode the MARCO corpus, which is split into 10 fi
 
 #### Faiss Notice
 
-* Faiss-GPU search is also supported but requires sufficient CUDA memory. In our experience, CUDA memory >= 1\*A100 or 2\*3090 or 4\*2080ti is ok, e.g., setting `SEARCH_CUDA="0,1,2,3"`. If your CUDA memory is still not enough, you can use split search: set `--sub_split_num 5` and the *sub_split_num* can be 1/2/5
+> Faiss-GPU search is also supported but requires sufficient CUDA memory. In our experience, CUDA memory >= 1\*A100 or 2\*3090 or 4\*2080ti is ok, e.g., setting `SEARCH_CUDA="0,1,2,3"`. If your CUDA memory is still not enough, you can use split search: set `--sub_split_num 5` and the *sub_split_num* can be 1/2/5
 
-* You can of course also use Faiss-CPU search: (1) do not use `--use_gpu` and set `--batch_size -1`.
+> You can of course also use Faiss-CPU search: (1) do not use `--use_gpu` and set `--batch_size -1`.
 
 
 ### MARCO Reproduce w/ Our Episode-3 Training Negatives
