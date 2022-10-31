@@ -177,7 +177,7 @@ After training for 3 epochs, you can follow the instructions in [MARCO: Reproduc
 
 
 
-### MARCO Reproduce from Scratch (Episode 1->2->3)
+### MARCO Reproduce from Scratch
 
 If you want to reproduce ANCE-Tele from scratch (Epi->2->3), you just need to prepare the vanilla pretrained model [co-condenser-marco](https://huggingface.co/Luyu/co-condenser-marco).
 
