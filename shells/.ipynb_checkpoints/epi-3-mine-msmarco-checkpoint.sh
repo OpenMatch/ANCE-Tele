@@ -2,12 +2,15 @@ export DATA_DIR=/home/sunsi/dataset/msmarco/msmarco
 export OUTPUT_DIR=/home/sunsi/experiments/msmarco-results
 ## *************************************
 ## INPUT/OUTPUT
-export train_job_name=co-condenser-marco
+export train_job_name=epi-2.ance-tele.msmarco.checkp-20000
 export infer_job_name=inference.${train_job_name}
 ## OUTPUT
 export new_ann_hn_file_name=ann-neg.${train_job_name}
 export new_la_hn_file_name=la-neg.${train_job_name}
-export new_tele_file_name_wo_mom=epi-1-tele-neg.msmarco
+export new_tele_file_name_wo_mom=ann-la-neg.${train_job_name}
+
+export prev_tele_file_name=epi-2-tele-neg.msmarco
+export new_tele_file_name=epi-3-tele-neg.msmarco
 ## *************************************
 ## *************************************
 TOKENIZER=bert-base-uncased
@@ -100,8 +103,8 @@ SEARCH_CUDA="0,1,2,3,4"
 # --save_text \
 # --depth 200 \
 # --save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/train.rank.tsv \
-# # --sub_split_num 5 \
-# # ## sub_split_num: if CUDA memory is not enough, set this augments.
+# --sub_split_num 5 \
+# ## sub_split_num: if CUDA memory is not enough, set this augments.
 
 # ## *************************************
 # ## Search Train-Positives (GPU)
@@ -115,40 +118,49 @@ SEARCH_CUDA="0,1,2,3,4"
 # --save_text \
 # --depth 200 \
 # --save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/train.positives.rank.tsv \
-# # --sub_split_num 5 \
-# # ## sub_split_num: if CUDA memory is not enough, set this augments.
+# --sub_split_num 5 \
+# ## sub_split_num: if CUDA memory is not enough, set this augments.
 
-## *************************************
-## Mine Train Negative
-## *************************************
-python ../preprocess/build_train_hn.py \
---tokenizer_name ${TOKENIZER} \
---hn_file ${OUTPUT_DIR}/${infer_job_name}/train.rank.tsv \
---qrels ${DATA_DIR}/qrels.train.tsv \
---queries ${DATA_DIR}/train.query.txt \
---collection ${DATA_DIR}/corpus.tsv \
---save_to ${DATA_DIR}/${TOKENIZER_ID}/${new_ann_hn_file_name} \
---depth 200 \
---n_sample 30 \
+# ## *************************************
+# ## Mine Train Negative
+# ## *************************************
+# python ../preprocess/build_train_hn.py \
+# --tokenizer_name ${TOKENIZER} \
+# --hn_file ${OUTPUT_DIR}/${infer_job_name}/train.rank.tsv \
+# --qrels ${DATA_DIR}/qrels.train.tsv \
+# --queries ${DATA_DIR}/train.query.txt \
+# --collection ${DATA_DIR}/corpus.tsv \
+# --save_to ${DATA_DIR}/${TOKENIZER_ID}/${new_ann_hn_file_name} \
+# --depth 200 \
+# --n_sample 30 \
 
-## *************************************
-## Mine Train-Positive Negative
-## *************************************
-python ../preprocess/build_train_hn.py \
---tokenizer_name ${TOKENIZER} \
---hn_file ${OUTPUT_DIR}/${infer_job_name}/train.positives.rank.tsv \
---qrels ${DATA_DIR}/qrels.train.tsv \
---queries ${DATA_DIR}/train.query.txt \
---collection ${DATA_DIR}/corpus.tsv \
---save_to ${DATA_DIR}/${TOKENIZER_ID}/${new_la_hn_file_name} \
---depth 200 \
---n_sample 30 \
+# ## *************************************
+# ## Mine Train-Positive Negative
+# ## *************************************
+# python ../preprocess/build_train_hn.py \
+# --tokenizer_name ${TOKENIZER} \
+# --hn_file ${OUTPUT_DIR}/${infer_job_name}/train.positives.rank.tsv \
+# --qrels ${DATA_DIR}/qrels.train.tsv \
+# --queries ${DATA_DIR}/train.query.txt \
+# --collection ${DATA_DIR}/corpus.tsv \
+# --save_to ${DATA_DIR}/${TOKENIZER_ID}/${new_la_hn_file_name} \
+# --depth 200 \
+# --n_sample 30 \
+
+# # # *************************************
+# # # Combine (ANN + LA) Negatives
+# # # *************************************
+# python ../preprocess/combine_marco_negative.py \
+# --data_dir ${DATA_DIR}/${TOKENIZER_ID} \
+# --input_folder_1 ${new_la_hn_file_name} \
+# --input_folder_2 ${new_ann_hn_file_name} \
+# --output_folder ${new_tele_file_name_wo_mom} \
 
 # # *************************************
-# # Combine ANN + LA Negatives
+# # Combine (ANN + LA + Mom) Negatives
 # # *************************************
 python ../preprocess/combine_marco_negative.py \
 --data_dir ${DATA_DIR}/${TOKENIZER_ID} \
---input_folder_1 ${new_la_hn_file_name} \
---input_folder_2 ${new_ann_hn_file_name} \
---output_folder ${new_tele_file_name_wo_mom} \
+--input_folder_1 ${new_tele_file_name_wo_mom} \
+--input_folder_2 ${prev_tele_file_name} \
+--output_folder ${new_tele_file_name} \

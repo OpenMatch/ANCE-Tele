@@ -2,15 +2,15 @@ export DATA_DIR=/home/sunsi/dataset/msmarco/msmarco
 export OUTPUT_DIR=/home/sunsi/experiments/msmarco-results
 ## *************************************
 ## INPUT/OUTPUT
-export train_job_name=epi-1.ance-tele.msmarco.checkp-20000
+export train_job_name=epi-2.ance-tele.msmarco.checkp-20000
 export infer_job_name=inference.${train_job_name}
 ## OUTPUT
 export new_ann_hn_file_name=ann-neg.${train_job_name}
 export new_la_hn_file_name=la-neg.${train_job_name}
 export new_tele_file_name_wo_mom=ann-la-neg.${train_job_name}
 
-export prev_tele_file_name=epi-1-tele-neg.msmarco
-export new_tele_file_name=epi-2-tele-neg.msmarco
+export prev_tele_file_name=epi-2-tele-neg.msmarco
+export new_tele_file_name=epi-3-tele-neg.msmarco
 ## *************************************
 ## *************************************
 TOKENIZER=bert-base-uncased

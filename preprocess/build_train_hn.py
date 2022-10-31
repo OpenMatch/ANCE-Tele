@@ -5,13 +5,7 @@ import random
 from tqdm import tqdm
 from datetime import datetime
 from multiprocessing import Pool
-
-## ------- Modified by SS.
-import sys
-sys.path.append("..")
-## ------- Modified by SS.
-
-from ancetele.preprocessor import MarcoPassageTrainPreProcessor as TrainPreProcessor
+from preprocessor import SimpleTrainPreProcessor
 
 
 def load_ranking(rank_file, relevance, n_sample, depth):
@@ -58,9 +52,9 @@ parser.add_argument('--shard_size', type=int, default=45000)
 
 args = parser.parse_args()
 
-qrel = TrainPreProcessor.read_qrel(args.qrels)
+qrel = SimpleTrainPreProcessor.read_qrel(args.qrels)
 tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_name, use_fast=True)
-processor = TrainPreProcessor(
+processor = SimpleTrainPreProcessor(
     query_file=args.queries,
     collection_file=args.collection,
     tokenizer=tokenizer,

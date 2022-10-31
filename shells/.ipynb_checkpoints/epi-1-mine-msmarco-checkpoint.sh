@@ -75,48 +75,48 @@ SEARCH_CUDA="0,1,2,3,4"
 # --encode_in_path ${DATA_DIR}/${TOKENIZER_ID}/query/train.query.json \
 # --encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/query/train.pt \
 
-## *************************************
-## Encoding Train-Positives
-## *************************************
-CUDA_VISIBLE_DEVICES=${ENCODE_CUDAs[-1]} python ../ancetele/encode.py \
---output_dir ${OUTPUT_DIR}/${infer_job_name} \
---model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
---fp16 \
---per_device_eval_batch_size 1024 \
---dataloader_num_workers 2 \
---encode_in_path ${DATA_DIR}/${TOKENIZER_ID}/query/train.positives.json \
---encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/query/train.positives.pt \
+# ## *************************************
+# ## Encoding Train-Positives
+# ## *************************************
+# CUDA_VISIBLE_DEVICES=${ENCODE_CUDAs[-1]} python ../ancetele/encode.py \
+# --output_dir ${OUTPUT_DIR}/${infer_job_name} \
+# --model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
+# --fp16 \
+# --per_device_eval_batch_size 1024 \
+# --dataloader_num_workers 2 \
+# --encode_in_path ${DATA_DIR}/${TOKENIZER_ID}/query/train.positives.json \
+# --encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/query/train.positives.pt \
 
 
-## *************************************
-## Search Train (GPU)
-## *************************************
-CUDA_VISIBLE_DEVICES=${SEARCH_CUDA} python ../ancetele/faiss_retriever/do_retrieval.py \
---query_reps ${OUTPUT_DIR}/${infer_job_name}/query/train.pt \
---passage_reps ${OUTPUT_DIR}/${infer_job_name}/corpus/'*.pt' \
---index_num ${SplitNum} \
---use_gpu \
---batch_size 1024 \
---save_text \
---depth 200 \
---save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/train.rank.tsv \
---sub_split_num 5 \
-## sub_split_num: if CUDA memory is not enough, set this augments.
+# ## *************************************
+# ## Search Train (GPU)
+# ## *************************************
+# CUDA_VISIBLE_DEVICES=${SEARCH_CUDA} python ../ancetele/faiss_retriever/do_retrieval.py \
+# --query_reps ${OUTPUT_DIR}/${infer_job_name}/query/train.pt \
+# --passage_reps ${OUTPUT_DIR}/${infer_job_name}/corpus/'*.pt' \
+# --index_num ${SplitNum} \
+# --use_gpu \
+# --batch_size 1024 \
+# --save_text \
+# --depth 200 \
+# --save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/train.rank.tsv \
+# # --sub_split_num 5 \
+# # ## sub_split_num: if CUDA memory is not enough, set this augments.
 
-## *************************************
-## Search Train-Positives (GPU)
-## *************************************
-CUDA_VISIBLE_DEVICES=${SEARCH_CUDA} python ../ancetele/faiss_retriever/do_retrieval.py \
---query_reps ${OUTPUT_DIR}/${infer_job_name}/query/train.positives.pt \
---passage_reps ${OUTPUT_DIR}/${infer_job_name}/corpus/'*.pt' \
---index_num ${SplitNum} \
---use_gpu \
---batch_size 1024 \
---save_text \
---depth 200 \
---save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/train.positives.rank.tsv \
---sub_split_num 5 \
-## sub_split_num: if CUDA memory is not enough, set this augments.
+# ## *************************************
+# ## Search Train-Positives (GPU)
+# ## *************************************
+# CUDA_VISIBLE_DEVICES=${SEARCH_CUDA} python ../ancetele/faiss_retriever/do_retrieval.py \
+# --query_reps ${OUTPUT_DIR}/${infer_job_name}/query/train.positives.pt \
+# --passage_reps ${OUTPUT_DIR}/${infer_job_name}/corpus/'*.pt' \
+# --index_num ${SplitNum} \
+# --use_gpu \
+# --batch_size 1024 \
+# --save_text \
+# --depth 200 \
+# --save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/train.positives.rank.tsv \
+# # --sub_split_num 5 \
+# # ## sub_split_num: if CUDA memory is not enough, set this augments.
 
 ## *************************************
 ## Mine Train Negative
