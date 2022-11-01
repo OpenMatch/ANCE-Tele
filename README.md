@@ -237,7 +237,6 @@ After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
-
 ## Reproduce NQ and TriviaQA Results
 
 
@@ -290,7 +289,7 @@ The format of nq/triviaqa-train-qrels.jsonl file is as follows:
   "positive_ctxs": [xxx, ...],
 }
 ```
-P.S. "positive_ctxs" is a positive passage list. When the list is empty, this means [DPR](https://arxiv.org/pdf/2004.04906.pdf) did not provide the oracle relevant passage for the query. Not empty means that the relevant passage info has been provided, including psg_id, title, text, etc.
+P.S. "positive_ctxs" is a positive passage list. When the list is empty, this means [DPR](https://arxiv.org/pdf/2004.04906.pdf) did not provide the oracle relevant passage for the training query. In this case, we use the passages containing the answer mined by ANCE-Tele as the "positive" passages during training.
 
 
 
