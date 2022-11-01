@@ -236,7 +236,8 @@ After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our
 * [Iterative Training Notice](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
 
 ## Reproduce NQ and TriviaQA Results
 
@@ -252,6 +253,7 @@ After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our
 ### NQ and TriviaQA Download
 
 [1] Download Datasets
+  - NQ and TriviaQA use the same Wikipedia-Corpus-Index.
 
 |Download Link|Size|
 |:-----|:----|
@@ -259,7 +261,6 @@ After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our
 |[triviaqa.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/triviaqa.tar.gz)|~174.6M|
 |[wikipedia-corpus-index.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/wikipedia-corpus-index.tar.gz)|~12.9G|
 
-P.S. NQ and TriviaQA use the same Wikipedia-Corpus-Index.
 
 [2] Uncompress Datasets
 
@@ -293,6 +294,8 @@ P.S. "positive_ctxs" is a positive passage list. When the list is empty, this me
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
 
 ## Contact Us
 
