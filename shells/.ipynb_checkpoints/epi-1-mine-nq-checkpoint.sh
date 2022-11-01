@@ -1,28 +1,32 @@
-export DATA_DIR=/home/sunsi/dataset/msmarco
-export OUTPUT_DIR=/home/sunsi/experiments/msmarco-results
+export DATA_DIR=/home/sunsi/dataset/nq
+export OUTPUT_DIR=/home/sunsi/experiments/nq-results
+export CORPUS_DATA_DIR=/home/sunsi/dataset/wikipedia-corpus-index
 ## *************************************
 ## INPUT/OUTPUT
-export train_job_name=epi-1.ance-tele.msmarco.checkp-20000
+export train_job_name=co-condenser-wiki
 export infer_job_name=inference.${train_job_name}
 ## OUTPUT
 export new_ann_hn_file_name=ann-neg.${train_job_name}
 export new_la_hn_file_name=la-neg.${train_job_name}
-export new_tele_file_name_wo_mom=ann-la-neg.${train_job_name}
+export new_tele_file_name_wo_mom=epi-1-tele-neg.nq
+## *************************************
 
-export mom_tele_file_name=epi-1-tele-neg.msmarco
-export new_tele_file_name=epi-2-tele-neg.msmarco
-## *************************************
-## *************************************
-TOKENIZER=bert-base-uncased
-TOKENIZER_ID=bert
-SplitNum=10
 ## *************************************
 ## ENCODE Corpus GPUs
-ENCODE_CUDA="0,1,2,3,4"
+ENCODE_CUDA="0,1,2,3,4" ## ENCODE_CUDA="0"
 ENCODE_CUDAs=(${ENCODE_CUDA//,/ })
 ENCODE_CUDA_NUM=${#ENCODE_CUDAs[@]}
 ## Search Top-k GPUs
 SEARCH_CUDA="0,1,2,3,4"
+## *************************************
+## Length SetUp
+export q_max_len=32
+export p_max_len=156
+## *************************************
+TOKENIZER=bert-base-uncased
+TOKENIZER_ID=bert
+SplitNum=20 ## Wikipedia is splited into 20 sub-files
+## *************************************
 
 ## **********************************************
 ## Infer
@@ -55,7 +59,8 @@ do
         --fp16 \
         --per_device_eval_batch_size 1024 \
         --dataloader_num_workers 2 \
-        --encode_in_path ${DATA_DIR}/${TOKENIZER_ID}/corpus/split${i}.json \
+        --p_max_len ${p_max_len} \
+        --encode_in_path ${CORPUS_DATA_DIR}/${TOKENIZER_ID}/corpus/split${i}.json \
         --encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/corpus/split${i}.pt &> \
         ${OUTPUT_DIR}/${infer_job_name}/corpus/split${i}.log &&
         ## *************************************
@@ -64,103 +69,99 @@ do
     done
 done
 
+
 ## *************************************
-## Encoding Train-Queries
+## Encode [Train Query]
 ## *************************************
 CUDA_VISIBLE_DEVICES=${ENCODE_CUDAs[-1]} python ../ancetele/encode.py \
 --output_dir ${OUTPUT_DIR}/${infer_job_name} \
 --model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
 --fp16 \
---q_max_len 32 \
+--q_max_len ${q_max_len} \
 --encode_is_qry \
---per_device_eval_batch_size 2048 \
---dataloader_num_workers 2 \
---encode_in_path ${DATA_DIR}/${TOKENIZER_ID}/query/train.query.json \
---encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/query/train.pt \
-
-## *************************************
-## Encoding Train-Positives
-## *************************************
-CUDA_VISIBLE_DEVICES=${ENCODE_CUDAs[-1]} python ../ancetele/encode.py \
---output_dir ${OUTPUT_DIR}/${infer_job_name} \
---model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
---fp16 \
 --per_device_eval_batch_size 1024 \
---dataloader_num_workers 2 \
---encode_in_path ${DATA_DIR}/${TOKENIZER_ID}/query/train.positives.json \
---encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/query/train.positives.pt \
+--encode_in_path ${DATA_DIR}/${TOKENIZER_ID}/query/train.query.json \
+--encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/query/train.query.pt \
 
 
 ## *************************************
-## Search Train (GPU)
+## Search [Train]
 ## *************************************
 CUDA_VISIBLE_DEVICES=${SEARCH_CUDA} python ../ancetele/faiss_retriever/do_retrieval.py \
---query_reps ${OUTPUT_DIR}/${infer_job_name}/query/train.pt \
+--query_reps ${OUTPUT_DIR}/${infer_job_name}/query/train.query.pt \
 --passage_reps ${OUTPUT_DIR}/${infer_job_name}/corpus/'*.pt' \
 --index_num ${SplitNum} \
---use_gpu \
 --batch_size 1024 \
+--use_gpu \
 --save_text \
 --depth 200 \
 --save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/train.rank.tsv \
 --sub_split_num 5 \
-## sub_split_num: if CUDA memory is not enough, set this augments.
+## if CUDA memory is not enough, set this augment.
 
-## *************************************
-## Search Train-Positives (GPU)
-## *************************************
+
+# # ***************************************************
+# # Filter [Train] & Generate ANN Negatives & Generate [Train-Positive]
+# # ***************************************************
+python ../preprocess/build_train_em_hn.py \
+--tokenizer_name ${TOKENIZER} \
+--input_file ${OUTPUT_DIR}/${infer_job_name}/train.rank.tsv \
+--queries ${DATA_DIR}/nq-train-qrels.jsonl \
+--collection ${CORPUS_DATA_DIR}/psgs_w100.tsv \
+--save_to ${DATA_DIR}/${TOKENIZER_ID}/${new_ann_hn_file_name} \
+--n_sample 80 \
+--depth 200 \
+--gen_pos_file ${OUTPUT_DIR}/${infer_job_name}/train.positives.json \
+--mark hn \
+
+
+# # ***************************************************
+# # Encode [Train-Positive]
+# # ***************************************************
+CUDA_VISIBLE_DEVICES=${ENCODE_CUDAs[-1]} python ../ancetele/encode.py \
+--output_dir ${OUTPUT_DIR}/${infer_job_name} \
+--model_name_or_path ${OUTPUT_DIR}/${train_job_name} \
+--fp16 \
+--p_max_len ${p_max_len} \
+--per_device_eval_batch_size 1024 \
+--encode_in_path ${OUTPUT_DIR}/${infer_job_name}/train.positives.json \
+--encoded_save_path ${OUTPUT_DIR}/${infer_job_name}/query/train.positives.pt \
+
+
+## ***************************************************
+## Search [Train-Positive]
+## ***************************************************
 CUDA_VISIBLE_DEVICES=${SEARCH_CUDA} python ../ancetele/faiss_retriever/do_retrieval.py \
 --query_reps ${OUTPUT_DIR}/${infer_job_name}/query/train.positives.pt \
 --passage_reps ${OUTPUT_DIR}/${infer_job_name}/corpus/'*.pt' \
 --index_num ${SplitNum} \
---use_gpu \
 --batch_size 1024 \
+--use_gpu \
 --save_text \
 --depth 200 \
 --save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/train.positives.rank.tsv \
 --sub_split_num 5 \
-## sub_split_num: if CUDA memory is not enough, set this augments.
+## if CUDA memory is not enough, set this augment.
 
-## *************************************
-## Mine Train Negative
-## *************************************
-python ../preprocess/build_train_hn.py \
+# ***************************************************
+# Filter [Train-Positive] & Generate LA Negatives
+# ***************************************************
+python ../preprocess/build_train_em_hn.py \
 --tokenizer_name ${TOKENIZER} \
---hn_file ${OUTPUT_DIR}/${infer_job_name}/train.rank.tsv \
---qrels ${DATA_DIR}/qrels.train.tsv \
---queries ${DATA_DIR}/train.query.txt \
---collection ${DATA_DIR}/corpus.tsv \
---save_to ${DATA_DIR}/${TOKENIZER_ID}/${new_ann_hn_file_name} \
---depth 200 \
---n_sample 30 \
-
-## *************************************
-## Mine Train-Positive Negative
-## *************************************
-python ../preprocess/build_train_hn.py \
---tokenizer_name ${TOKENIZER} \
---hn_file ${OUTPUT_DIR}/${infer_job_name}/train.positives.rank.tsv \
---qrels ${DATA_DIR}/qrels.train.tsv \
---queries ${DATA_DIR}/train.query.txt \
---collection ${DATA_DIR}/corpus.tsv \
+--input_file ${OUTPUT_DIR}/${infer_job_name}/train.positives.rank.tsv \
+--queries ${DATA_DIR}/nq-train-qrels.jsonl \
+--collection ${CORPUS_DATA_DIR}/psgs_w100.tsv \
 --save_to ${DATA_DIR}/${TOKENIZER_ID}/${new_la_hn_file_name} \
+--n_sample 80 \
 --depth 200 \
---n_sample 30 \
+--mark la.hn \
+
 
 # # *************************************
-# # Combine (ANN + LA) Negatives
+# # Combine ANN + LA Negatives
 # # *************************************
-python ../preprocess/combine_marco_negative.py \
+python ../preprocess/combine_nq_triviaqa_negative.py \
 --data_dir ${DATA_DIR}/${TOKENIZER_ID} \
 --input_folder_1 ${new_la_hn_file_name} \
 --input_folder_2 ${new_ann_hn_file_name} \
 --output_folder ${new_tele_file_name_wo_mom} \
-
-# # *************************************
-# # Combine (ANN + LA + Mom) Negatives
-# # *************************************
-python ../preprocess/combine_marco_negative.py \
---data_dir ${DATA_DIR}/${TOKENIZER_ID} \
---input_folder_1 ${new_tele_file_name_wo_mom} \
---input_folder_2 ${mom_tele_file_name} \
---output_folder ${new_tele_file_name} \

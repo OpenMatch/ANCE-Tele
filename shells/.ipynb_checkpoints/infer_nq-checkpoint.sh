@@ -9,15 +9,15 @@ export psg_encoder_name=ance-tele_nq_psg-encoder
 export infer_job_name=inference.ance-tele.nq
 ## *************************************
 ## ENCODE Corpus GPUs
-ENCODE_CUDA="0,1,2,4,5" ## ENCODE_CUDA="0"
+ENCODE_CUDA="0,1,2,3,4" ## ENCODE_CUDA="0"
 ENCODE_CUDAs=(${ENCODE_CUDA//,/ })
 ENCODE_CUDA_NUM=${#ENCODE_CUDAs[@]}
 ## Search Top-k GPUs
-SEARCH_CUDA="0,1,2,4,5"
+SEARCH_CUDA="0,1,2,3,4"
 ## *************************************
 ## Length SetUp
 export q_max_len=32
-export p_max_len=100 ## 记得改过来！！！！！！！！！ 156
+export p_max_len=156
 ## *************************************
 TOKENIZER=bert-base-uncased
 TOKENIZER_ID=bert
@@ -91,8 +91,8 @@ CUDA_VISIBLE_DEVICES=${SEARCH_CUDA} python ../ancetele/faiss_retriever/do_retrie
 --save_text \
 --depth 100 \
 --save_ranking_to ${OUTPUT_DIR}/${infer_job_name}/test.rank.tsv \
---sub_split_num 10 \
-# ## if CUDA memory is not enough, set this augments.
+# --sub_split_num 5 \
+## if CUDA memory is not enough, set this augment.
 
 
 ## *************************************

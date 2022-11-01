@@ -1,12 +1,12 @@
-export DATA_DIR=/home/sunsi/dataset/nq
-export OUTPUT_DIR=/home/sunsi/experiments/nq-results
+export DATA_DIR=/home/sunsi/dataset/triviaqa
+export OUTPUT_DIR=/home/sunsi/experiments/triviaqa-results
 export CORPUS_DATA_DIR=/home/sunsi/dataset/wikipedia-corpus-index
-export pyserini_eval_topics=dpr-nq-test
+export pyserini_eval_topics=dpr-trivia-test
 ## *************************************
 ## INPUT/OUTPUT
-export qry_encoder_name=ance-tele_nq_qry-encoder
-export psg_encoder_name=ance-tele_nq_psg-encoder
-export infer_job_name=inference.ance-tele.nq
+export qry_encoder_name=ance-tele_triviaqa_qry-encoder
+export psg_encoder_name=ance-tele_triviaqa_psg-encoder
+export infer_job_name=inference.ance-tele.triviaqa
 ## *************************************
 ## ENCODE Corpus GPUs
 ENCODE_CUDA="0,1,2,3,4" ## ENCODE_CUDA="0"
@@ -16,7 +16,7 @@ ENCODE_CUDA_NUM=${#ENCODE_CUDAs[@]}
 SEARCH_CUDA="0,1,2,3,4"
 ## *************************************
 ## Length SetUp
-export q_max_len=32
+export q_max_len=64 ## TriviaQA query is longer, so we use length 64 for inference (training still uses length 32 to save cost)
 export p_max_len=156
 ## *************************************
 TOKENIZER=bert-base-uncased

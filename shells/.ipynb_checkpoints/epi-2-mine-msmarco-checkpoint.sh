@@ -9,7 +9,7 @@ export new_ann_hn_file_name=ann-neg.${train_job_name}
 export new_la_hn_file_name=la-neg.${train_job_name}
 export new_tele_file_name_wo_mom=ann-la-neg.${train_job_name}
 
-export prev_tele_file_name=epi-1-tele-neg.msmarco
+export mom_tele_file_name=epi-1-tele-neg.msmarco
 export new_tele_file_name=epi-2-tele-neg.msmarco
 ## *************************************
 ## *************************************
@@ -162,5 +162,5 @@ python ../preprocess/combine_marco_negative.py \
 python ../preprocess/combine_marco_negative.py \
 --data_dir ${DATA_DIR}/${TOKENIZER_ID} \
 --input_folder_1 ${new_tele_file_name_wo_mom} \
---input_folder_2 ${prev_tele_file_name} \
+--input_folder_2 ${mom_tele_file_name} \
 --output_folder ${new_tele_file_name} \
