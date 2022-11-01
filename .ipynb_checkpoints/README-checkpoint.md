@@ -424,10 +424,6 @@ bash epi-3-train-nq.sh  # NQ
 bash epi-3-train-triviaqa.sh  # TriviaQA
 ```
 
-[4] Evaluate your ANCE-Tele
-
-After three episode, first [Prepare your ANCE-Tele for NQ and TriviaQA](#prepare-your-ance-tele-for-nq-and-triviaqa) and then [Evaluate your ANCE-Tele](#evaluate-your-ance-tele).
-
 
 [4] Evaluate your ANCE-Tele
 
