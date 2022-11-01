@@ -252,7 +252,8 @@ After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our
 ### NQ and TriviaQA Download
 
 [1] Download Datasets
-  - NQ and TriviaQA use the same Wikipedia-Corpus-Index.
+
+NQ and TriviaQA use the same Wikipedia-Corpus-Index.
 
 |Download Link|Size|
 |:-----|:----|
