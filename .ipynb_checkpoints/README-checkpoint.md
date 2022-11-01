@@ -229,13 +229,6 @@ bash epi-3-train-msmarco.sh
 After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
 
-## Easy-to-Use Tips
-
-* [Faiss Notice](#faiss-notice): Multi-GPU/CPU Search
-* [Grad Cache Notice](#grad-cache-notice): Save CUDA Memory (Train ANCE-Tele with 2080ti)
-* [Iterative Training Notice](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
 ## Reproduce NQ and TriviaQA Results
 
@@ -294,6 +287,16 @@ P.S. "positive_ctxs" is a positive passage list. When the list is empty, this me
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
+
+
+
+## Easy-to-Use Tips
+
+* [Faiss Notice](#faiss-notice): Multi-GPU/CPU Search
+* [Grad Cache Notice](#grad-cache-notice): Save CUDA Memory (Train ANCE-Tele with 2080ti)
+* [Iterative Training Notice](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
+
+
 
 ## Contact Us
 
