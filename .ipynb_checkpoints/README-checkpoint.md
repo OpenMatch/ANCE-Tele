@@ -80,7 +80,7 @@ pyserini ## pyserini is depend on openjdk
 
 [2] Uncompress Dataset
 
-Run the command: `tar -zxcf msmarco.tar.gz`. The uncompressed folder contains the following files:
+Run the command: `tar -zxvf msmarco.tar.gz`. The uncompressed folder contains the following files:
 
 ```
 msmarco
@@ -134,7 +134,7 @@ P.S. We support multi-gpus to encode the MARCO corpus, which is split into 10 fi
 
 [2] Uncompress our Epi-3 training negatives:
 
-Run the command: `tar -zxcf ance-tele_msmarco_tokenized-train-data.tar.gz`. The uncompressed folder contains 12 sub-files {split00-11.hn.json}. The format of each file is as follows:
+Run the command: `tar -zxvf ance-tele_msmarco_tokenized-train-data.tar.gz`. The uncompressed folder contains 12 sub-files {split00-11.hn.json}. The format of each file is as follows:
 ```
 {
   "query": [train-query tokenized ids],
@@ -256,7 +256,7 @@ NQ and TriviaQA use the same Wikipedia-Corpus-Index.
 
 [2] Uncompress Datasets
 
-Run the command: `tar -zxcf xxx.tar.gz`. The uncompressed folder contains the following files:
+Run the command: `tar -zxvf xxx.tar.gz`. The uncompressed folder contains the following files:
 
 ```
 nq
