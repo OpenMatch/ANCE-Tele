@@ -16,7 +16,7 @@ This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Confer
   - [Overview](#overview)
   - [Requirements](#requirements)
   - [Reproduce MS MARCO Results](#reproduce-ms-marco-results)
-  - [Reproduce NQ & TriviaQA Results](#reproduce-nq-and-triviaqa-results) [Will be updated on 11/1]
+  - [Reproduce NQ & TriviaQA Results](#reproduce-nq-and-triviaqa-results)
   - [Easy-to-Use Tips](#easy-to-use-tips)
   - [Contact Us](#acknowledgement)
   - [Acknowledgement](#acknowledgement)
