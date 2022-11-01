@@ -84,11 +84,11 @@ Run the command: `tar -zxvf msmarco.tar.gz`. The uncompressed folder contains th
 
 ```
 msmarco
-  ├── corpus.tsv  # <FORMAT> psg_id /t psg_title /t psg
-  ├── train.query.txt  # <FORMAT> qry_id /t qry
-  ├── qrels.train.tsv  # <FORMAT> qry_id /t 0 /t pos_psg_id /t 1
-  ├── dev.query.txt  # <FORMAT> qry_id /t qry
-  └── qrels.dev.small.tsv  # <FORMAT> qry_id /t 0 /t pos_psg_id /t 1
+  ├── corpus.tsv  # <TSV> psg_id /t psg_title /t psg
+  ├── train.query.txt  # <TSV> qry_id /t qry
+  ├── qrels.train.tsv  # <TSV> qry_id /t 0 /t pos_psg_id /t 1
+  ├── dev.query.txt  # <TSV> qry_id /t qry
+  └── qrels.dev.small.tsv  # <TSV> qry_id /t 0 /t pos_psg_id /t 1
 ```
 
 ### MARCO Preprocess
@@ -110,7 +110,6 @@ bash tokenize_msmarco.sh
 
 [2] Encoder & Search MS MARCO using our CheckP:
 
-Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
 bash infer_msmarco.sh
 ```
@@ -146,8 +145,6 @@ Run the command: `tar -zxvf ance-tele_msmarco_tokenized-train-data.tar.gz`. The 
 ```
 
 [3] Train ANCE-Tele using our Epi-3 training negtatives
-
-Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
 bash train_ance-tele_msmarco.sh
 ```
@@ -311,8 +308,6 @@ For NQ and TriviaQA, ANCE-Tele adopts Bi-encoder architecture, the same as DPR, 
 
 
 [2] Encoder & Search NQ/TriviaQA using our CheckPs:
-
-Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
 bash infer_nq.sh  # NQ
 bash infer_triviaqa.sh  # TriviaQA
@@ -367,13 +362,13 @@ ${train_job_name}
   ├── query_model  # Qry-Encoder
   └── passage_model  # Psg-Encoder
 ```
-Before evaluation, please copy the three files `special_tokens_map.json`, `tokenizer_config.json`, and `vocab.txt` into Qry/Psg-Encoder folders.
+Before using your model, please copy the three files `special_tokens_map.json`, `tokenizer_config.json`, and `vocab.txt` into Qry/Psg-Encoder folders.
 ```
 cp special_tokens_map.json tokenizer_config.json vocab.txt ./query_model
 cp special_tokens_map.json tokenizer_config.json vocab.txt ./passage_model
 ```
 
-#### Evaluate your ANCE-Tele
+[4] Evaluate your ANCE-Tele
 
 Then you can follow the instructions in [NQ/TriviaQA: Reproduce w/ Our CheckPs](#nq-and-triviaqa-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckPs with your trained model file 😉:
 ```
@@ -384,9 +379,7 @@ export psg_encoder_name=${train_job_name}/passage_model
 
 ### NQ and TriviaQA Reproduce from Scratch
 
-If you want to reproduce ANCE-Tele from scratch (Epi->2->3), you just need to prepare the vanilla pretrained model [co-condenser-wiki](https://huggingface.co/Luyu/co-condenser-wiki).
-
-Before starting to reproduce, please know the *quick-refreshing-strategy* and *train-from-scratch* mode of ANCE-Tele [[Iterative Training Notice]](#iterative-training-notice) 🙌.
+If you want to reproduce ANCE-Tele from scratch (Epi->2->3), you just need to prepare the vanilla pretrained model [co-condenser-wiki](https://huggingface.co/Luyu/co-condenser-wiki). Before starting to reproduce, please know the *quick-refreshing-strategy* and *train-from-scratch* mode of ANCE-Tele [[Iterative Training Notice]](#iterative-training-notice) 🙌.
 
 
 [1] Epi-1
@@ -419,7 +412,7 @@ bash epi-2-train-triviaqa.sh  # TriviaQA
 
 [3] Epi-3
 
-For last Epi-3, mine Tele-negatives using the Epi-2 trained model. Epi-3 Tele-negatives contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-2 training negatives).
+For last Epi-3, prepare the Epi-2 trained model as introduced in [[Prepare your ANCE-Tele for NQ and TriviaQA]](#prepare-your-ance-tele-for-nq-and-triviaqa), and then use the prepared CheckPs to mine Epi-3 Tele-negatives, which contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-2 training negatives).
 ```
 bash epi-3-mine-nq.sh  # NQ
 bash epi-3-mine-triviaqa.sh  # TriviaQA
@@ -434,6 +427,15 @@ bash epi-3-train-triviaqa.sh  # TriviaQA
 [4] Evaluate your ANCE-Tele
 
 After three episode, first [Prepare your ANCE-Tele for NQ and TriviaQA](#prepare-your-ance-tele-for-nq-and-triviaqa) and then [Evaluate your ANCE-Tele](#evaluate-your-ance-tele).
+
+
+[4] Evaluate your ANCE-Tele
+
+After three episode, first [Prepare your ANCE-Tele for NQ and TriviaQA](#prepare-your-ance-tele-for-nq-and-triviaqa). Then you can follow the instructions in [NQ/TriviaQA: Reproduce w/ Our CheckPs](#nq-and-triviaqa-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckPs with your trained model file 😉:
+```
+export qry_encoder_name=${train_job_name}/query_model
+export psg_encoder_name=${train_job_name}/passage_model
+```
 
 
 
