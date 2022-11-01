@@ -236,6 +236,64 @@ After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our
 * [Iterative Training Notice](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
+
+## Reproduce NQ and TriviaQA Results
+
+
+- [NQ/TriviaQA Quick Link](#reproduce-nq-and-triviaqa-results)
+  - [NQ/TriviaQA: Download](#nq-and-triviaqa-download)
+  - [NQ/TriviaQA: Preprocess](#nq-and-triviaqa-preprocess)
+  - [NQ/TriviaQA: Reproduce w/ Our CheckPs](#nq-and-triviaqa-reproduce-using-our-checkps)
+  - [NQ/TriviaQA: Reproduce w/ Our Episode-3 Training Negatives](#nq-and-triviaqa-reproduce-using-our-episode-3-training-negatives)
+  - [NQ/TriviaQA: Reproduce from Scratch (Episode 1->2->3)](#nq-and-triviaqa-reproduce-from-scratch)
+
+
+### NQ and TriviaQA Download
+
+[1] Download Datasets
+
+|Download Link|Size|
+|:-----|:----|
+|[nq.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/nq.tar.gz)|~17.6M|
+|[triviaqa.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/triviaqa.tar.gz)|~174.6M|
+|[wikipedia-corpus-index.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/wikipedia-corpus-index.tar.gz)|~12.9G|
+
+P.S. NQ and TriviaQA use the same Wikipedia-Corpus-Index.
+
+[2] Uncompress Datasets
+
+Run the command: `tar -zxcf xxx.tar.gz`. The uncompressed folder contains the following files:
+
+```
+nq
+  ├── nq-train-qrels.jsonl
+  └── nq-test.jsonl # <DICT> {"qid":xxx, "question":xxx, "answers":[xxx, ...]}
+
+triviaqa
+  ├── triviaqa-train-qrels.jsonl
+  └── triviaqa-test.jsonl # <DICT> {"qid":xxx, "question":xxx, "answers":[xxx, ...]}
+
+wikipedia-corpus-index
+  ├── psgs_w100.tsv # <TSV> psg_id /t psg /t psg_title
+  └── index-wikipedia-dpr-20210120-d1b9e6 # Wikipedia Index (for pyserini evaluation)
+```
+
+
+The format of nq/triviaqa-train-qrels.jsonl file is as follows:
+```
+{
+  "qid": xxx,
+  "question": xxx,
+  "answers": [xxx, ...]
+  "positive_ctxs": [xxx, ...],
+}
+```
+P.S. "positive_ctxs" is a positive passage list. When the list is empty, this means [DPR](https://arxiv.org/pdf/2004.04906.pdf) did not provide the oracle relevant passage for the query. Not empty means that the relevant passage info has been provided, including psg_id, title, text, etc.
+
+
+
+
 ## Contact Us
 
 For any question, feel free to create an issue, and we will try our best to solve. If the problem is more urgent, you can send an email to me at the same time 🤗.
