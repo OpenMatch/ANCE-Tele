@@ -1,6 +1,6 @@
 # ANCE-Tele
 
-This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Conference paper **[Reduce Catastrophic Forgetting of Dense Retrieval Training with Teleportation Negatives](https://arxiv.org/pdf/2210.17167.pdf)**. If you find this work useful, please cite our paper 😃 and give our repo a star ⭐️. Thanks♪(･ω･)ﾉ
+This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Conference paper ["Reduce Catastrophic Forgetting of Dense Retrieval Training with Teleportation Negatives"](https://arxiv.org/pdf/2210.17167.pdf). If you find this work useful, please cite our paper 😃 and give our repo a star ⭐️ Thanks ♪(･ω･)ﾉ
 
 ```
 @inproceedings{sun2022ancetele,
@@ -16,7 +16,7 @@ This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Confer
   - [Overview](#overview)
   - [Requirements](#requirements)
   - [Reproduce MS MARCO Results](#reproduce-ms-marco-results)
-  - [Reproduce NQ & TriviaQA Results](#reproduce-nq-and-triviaqa-results) [Will be updated on 11/1]
+  - [Reproduce NQ & TriviaQA Results](#reproduce-nq-and-triviaqa-results)
   - [Easy-to-Use Tips](#easy-to-use-tips)
   - [Contact Us](#acknowledgement)
   - [Acknowledgement](#acknowledgement)
@@ -28,7 +28,7 @@ This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Confer
 
 ANCE-Tele is a simple and efficient DR training method that introduces teleportation (momentum and lookahead) negatives to smooth the learning process, leading to ***improved training stability, convergence speed, and reduced catastrophic forgetting***.
 
-On web search and OpenQA, ANCE-Tele is ***competitive*** among systems using significantly more (50x) parameters, and ***eliminates the dependency on additional negatives (e.g., BM25, other DR systems), filtering strategies, and distillation modules.*** You can easily reproduce ANCE-Tele about one day with only an A100 😉. (Of course, 2080Ti is ok but with more time).
+On web search and OpenQA, ANCE-Tele is ***competitive*** among systems using significantly more (50x) parameters, and ***eliminates the dependency on additional negatives (e.g., BM25, other DR systems), filtering strategies, and distillation modules.*** You can easily reproduce ANCE-Tele in about one day with only an A100 😉. (Of course, 2080Ti is ok, but with more time).
 
 Let's begin!
 
@@ -80,15 +80,15 @@ pyserini ## pyserini is depend on openjdk
 
 [2] Uncompress Dataset
 
-Run the command: `tar -zxcf msmarco.tar.gz`. The uncompressed folder contains the following files:
+Run the command: `tar -zxvf msmarco.tar.gz`. The uncompressed folder contains the following files:
 
 ```
 msmarco
-  ├── corpus.tsv  # <FORMAT> psg_id /t psg_title /t psg
-  ├── train.query.txt  # <FORMAT> qry_id /t qry
-  ├── qrels.train.tsv  # <FORMAT> qry_id /t 0 /t pos_psg_id /t 1
-  ├── dev.query.txt  # <FORMAT> qry_id /t qry
-  └── qrels.dev.small.tsv  # <FORMAT> qry_id /t 0 /t pos_psg_id /t 1
+  ├── corpus.tsv  # <TSV> psg_id /t psg_title /t psg
+  ├── train.query.txt  # <TSV> qry_id /t qry
+  ├── qrels.train.tsv  # <TSV> qry_id /t 0 /t pos_psg_id /t 1
+  ├── dev.query.txt  # <TSV> qry_id /t qry
+  └── qrels.dev.small.tsv  # <TSV> qry_id /t 0 /t pos_psg_id /t 1
 ```
 
 ### MARCO Preprocess
@@ -110,17 +110,16 @@ bash tokenize_msmarco.sh
 
 [2] Encoder & Search MS MARCO using our CheckP:
 
-Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
 bash infer_msmarco.sh
 ```
-P.S. We support multi-gpus to encode the MARCO corpus, which is split into 10 files (split00-split09). But Multi-gpu encoding only supports the use of 1/2/5 gpus at the same time, e.g., setting `ENCODE_CUDA="0,1"`
+P.S. We support multi-GPUs to encode the MARCO corpus, which is split into ten files (split00-split09). But Multi-GPU encoding only supports the use of 1/2/5 GPUs at the same time, e.g., setting `ENCODE_CUDA="0,1"`
 
-#### Faiss Notice
+#### Faiss Search Notice 🙌
 
-> Faiss-GPU search is also supported but requires sufficient CUDA memory. In our experience, CUDA memory >= 1\*A100 or 2\*3090 or 4\*2080ti is ok, e.g., setting `SEARCH_CUDA="0,1,2,3"`. If your CUDA memory is still not enough, you can use split search: set `--sub_split_num 5` and the *sub_split_num* can be 1/2/5
+> ANCE-Tele supports Faiss-GPU search but requires sufficient CUDA memory. In our experience: MS MARCO >= 1\*A100 or 2\*3090/V100 or 4\*2080ti; NQ/TriviaQA >= 2\*A100 or 4\*3090/V100 or 8\*2080ti e.g., setting `SEARCH_CUDA="0,1,2,3"`.
 
-> You can of course also use Faiss-CPU search: (1) do not use `--use_gpu` and set `--batch_size -1`.
+> If your CUDA memory is not enough, you can use split search: set `--sub_split_num 5` and the *sub_split_num* can be 1/2/5/10. You can also use CPU search: (1) cancel `--use_gpu` and set `--batch_size -1`.
 
 
 ### MARCO Reproduce using Our Episode-3 Training Negatives
@@ -134,7 +133,7 @@ P.S. We support multi-gpus to encode the MARCO corpus, which is split into 10 fi
 
 [2] Uncompress our Epi-3 training negatives:
 
-Run the command: `tar -zxcf ance-tele_msmarco_tokenized-train-data.tar.gz`. The uncompressed folder contains 12 sub-files {split00-11.hn.json}. The format of each file is as follows:
+Run the command: `tar -zxvf ance-tele_msmarco_tokenized-train-data.tar.gz`. The uncompressed folder contains 12 sub-files {split00-11.hn.json}. The format of each file is as follows:
 ```
 {
   "query": [train-query tokenized ids],
@@ -144,8 +143,6 @@ Run the command: `tar -zxcf ance-tele_msmarco_tokenized-train-data.tar.gz`. The 
 ```
 
 [3] Train ANCE-Tele using our Epi-3 training negtatives
-
-Enter the folder `ANCE-Tele/shells` and run the shell script:
 ```
 bash train_ance-tele_msmarco.sh
 ```
@@ -158,9 +155,9 @@ P.S. Multi-GPU training is supported. Please keep the following hyperparameters 
 |Learning rate|--learning_rate|5e-6|5e-6|
 |Total training Epoch|--num_train_epochs|3|3|
 
-#### Grad Cache Notice
+#### Grad Cache Notice 🙌
 
-> If your CUDA memory is limited, please use [Gradient Caching](https://arxiv.org/pdf/2101.06983.pdf) technique. Set the following augments during training:
+> If your CUDA memory is limited, please use the [Gradient Caching](https://arxiv.org/pdf/2101.06983.pdf) technique. Set the following augments during training:
 ```
 --grad_cache \
 --gc_q_chunk_size 4 \
@@ -172,66 +169,63 @@ P.S. Multi-GPU training is supported. Please keep the following hyperparameters 
 
 [4] Evaluate your ANCE-Tele
 
-After training for 3 epochs, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
+After training for 3 epochs, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs - (3)](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
 
 
 ### MARCO Reproduce from Scratch
 
-If you want to reproduce ANCE-Tele from scratch (Epi->2->3), you just need to prepare the vanilla pretrained model [co-condenser-marco](https://huggingface.co/Luyu/co-condenser-marco).
+To reproduce ANCE-Tele from scratch (Epi->2->3), you only need to prepare the vanilla pretrained model [co-condenser-marco](https://huggingface.co/Luyu/co-condenser-marco).
 
 
-#### Iterative Training Notice
+#### Iterative Training Notice 🙌
 
-> ANCE-Tele takes a quick refreshing strategy for hard negative mining. Hence, Epi-1,2 just train 1/10 of the total number of training steps (early stop), only the last Epi-3 go through the full training epoch, which greatly reduces the training cost.
+> **Quick refreshing strategy.** ANCE-Tele takes a quick refreshing strategy for hard negative mining. Hence, Epi-1,2 only train 1/10 of the total training steps (early stop), and only the last Epi-3 goes through the entire training epoch, significantly reducing the training cost.
 
-> Every episode also adopts **train from scratch** mode, that is, each episode uses the vanilla pretrained model as the initial model, and the only difference is the training negatives. In this way, only the final training negatives are required to reproduce the results without relying on the intermediate CheckPs.
+> **Train from scratch.** Every training episode adopts train-from-scratch mode; each episode uses the vanilla pretrained model as the initial model, and the only difference is the input training negatives. In this way, it is convenient to reproduce the results without relying on intermediate episode CheckPs.
 
 
-[1] Epi-1
+[1] Epi-1 Training
 
-First mine the Tele-negatives using the the vanilla *co-condenser-marco*. In Epi-1 , Tele-negatives contain ANN-negatives and Lookahead-negatives (LA-Neg) without Momentum.
-
+First, mine the Tele-negatives using vanilla *co-condenser-marco*. In Epi-1, Tele-negatives contain ANN-negatives and Lookahead-negatives (LA-Neg) without Momentum.
 ```
 bash epi-1-mine-msmarco.sh
 ```
-Then train the vanilla *co-condenser-marco* with the Epi-1 Tele-negatives and early stop at 20k step for negative refreshing:
+Then train the vanilla *co-condenser-marco* with the Epi-1 Tele-negatives and early stop at 20k step prepared for negative refreshing:
 ```
 bash epi-1-train-msmarco.sh
 ```
 
-[2] Epi-2
+[2] Epi-2 Training
 
 For Epi-2, mine Tele-negatives using the Epi-1 trained model. Epi-2 Tele-negatives contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-1 training negatives).
 
 ```
 bash epi-2-mine-msmarco.sh
 ```
-Then train the vanilla *co-condenser-marco* with the Epi-2 Tele-negatives and early stop at 20k step for negative refreshing:
+Then train the vanilla *co-condenser-marco* with the Epi-2 Tele-negatives and early stop at 20k step prepared for negative refreshing:
 ```
 bash epi-2-train-msmarco.sh
 ```
 
-[3] Epi-3
+[3] Epi-3 Training
 
-For last Epi-3, mine Tele-negatives using the Epi-2 trained model. Epi-3 Tele-negatives contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-2 training negatives).
+For the last Epi-3, mine Tele-negatives using the Epi-2 trained model. Epi-3 Tele-negatives contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-2 training negatives).
 
 ```
 bash epi-3-mine-msmarco.sh
 ```
-Then train the vanilla *co-condenser-marco* with the Epi-3 Tele-negatives. This step is the same as introduced in [MARCO: Reproduce w/ Our Episode-3 Training Negatives](#marco-reproduce-using-our-episode-3-training-negatives):
+Then train the vanilla *co-condenser-marco* with the Epi-3 Tele-negatives. This step is the same as introduced in [MARCO: Reproduce w/ Our Episode-3 Training Negatives - (3) ](#marco-reproduce-using-our-episode-3-training-negatives):
 ```
 bash epi-3-train-msmarco.sh
 ```
 
 [4] Evaluate your ANCE-Tele
 
-After three episode, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
+After three episodes, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
 ## Reproduce NQ and TriviaQA Results
-
 
 - [NQ/TriviaQA Quick Link](#reproduce-nq-and-triviaqa-results)
   - [NQ/TriviaQA: Download](#nq-and-triviaqa-download)
@@ -256,7 +250,7 @@ NQ and TriviaQA use the same Wikipedia-Corpus-Index.
 
 [2] Uncompress Datasets
 
-Run the command: `tar -zxcf xxx.tar.gz`. The uncompressed folder contains the following files:
+Run the command: `tar -zxvf xxx.tar.gz`. The uncompressed folder contains the following files:
 
 ```
 nq
@@ -285,17 +279,165 @@ The format of nq/triviaqa-train-qrels.jsonl file is as follows:
 P.S. "positive_ctxs" is a positive passage list. When the list is empty, this means [DPR](https://arxiv.org/pdf/2004.04906.pdf) did not provide the oracle relevant passage for the training query. In this case, we use the passages containing the answer mined by ANCE-Tele as the "positive" passages during training.
 
 
+### NQ and TriviaQA Preprocess
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Update Here
+
+[1] Tokenize Datasets
+
+Enter the folder `ANCE-Tele/shells` and run the shell script:
+```
+bash tokenize_nq.sh
+bash tokenize_triviaqa.sh
+bash tokenize_wikipedia_corpus.sh
+```
+
+
+### NQ and TriviaQA Reproduce Using Our CheckPs
+
+[1] Download our CheckPs from HuggingFace:
+
+For NQ and TriviaQA, ANCE-Tele adopts Bi-encoder architecture, the same as DPR, coCondenser, etc.
+
+|Datasets|Qry-Encoder Download Link|Psg-Encoder Download Link|Size|R@5|R@20|R@100|
+|:-----|:----|:----|:----:|:----:|:----:|:----:|
+|NQ|[ance-tele_nq_qry-encoder](https://huggingface.co/OpenMatch/ance-tele_nq_qry-encoder)|[ance-tele_nq_psg-encoder](https://huggingface.co/OpenMatch/ance-tele_nq_psg-encoder)|~418M x 2|77.0|84.9|89.7|
+|TriviaQA|[ance-tele_triviaqa_qry-encoder](https://huggingface.co/OpenMatch/ance-tele_triviaqa_qry-encoder)|[ance-tele_triviaqa_psg-encoder](https://huggingface.co/OpenMatch/ance-tele_triviaqa_psg-encoder)|~418M x 2|76.9|83.4|87.3|
+
+P.S. Different GPUs can cause search results to vary by a few thousandths.
+
+[2] Encoder & Search NQ/TriviaQA using our CheckPs:
+```
+bash infer_nq.sh  # NQ
+bash infer_triviaqa.sh  # TriviaQA
+```
+
+P.S. We support multi-gpus to encode the wikipedia corpus, which is split into 20 files (split00-split19). But Multi-gpu encoding only supports the use of 1/2/5 gpus at the same time, e.g., setting `ENCODE_CUDA="0,1"`. If your CUDA memory is limited, please see [[Faiss Search Notice]](#faiss-search-notice) for more GPU Search details.
+
+
+
+### NQ and TriviaQA Reproduce using Our Episode-3 Training Negatives
+
+[1] Download vanilla pre-trained model & our Epi-3 training negatives:
+
+|Datassets|Download Link|Size|
+|:-----|:----|:----|
+|Vanilla pre-trained model|[co-condenser-wiki](https://huggingface.co/Luyu/co-condenser-wiki)|~419M|
+|NQ|[ance-tele_nq_tokenized-train-data.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/ance-tele_nq_tokenized-train-data.tar.gz)|~8.8G|
+|TriviaQA|[ance-tele_triviaqa_tokenized-train-data.tar.gz](https://thunlp.oss-cn-qingdao.aliyuncs.com/PaperData/EMNLP2022/ANCE-Tele/ance-tele_triviaqa_tokenized-train-data.tar.gz)|~6.8G|
+
+[2] Uncompress our Epi-3 training negatives:
+
+Run the command: `tar -zxvf xxx`. Each uncompressed dataset contains 2 sub-files {split00-01.hn.json}. The format of each file is as follows:
+```
+{
+  "query": [train-query tokenized ids],
+  "positives": [[positive-passage-1 tokenized ids], [positive-passage-2 tokenized ids], ...],
+  "negatives": [[negative-passage-1 tokenized ids], [negative-passage-2 tokenized ids], ...],
+}
+```
+
+[3] Train ANCE-Tele using our Epi-3 training negtatives
+```
+bash train_ance-tele_nq.sh  # NQ
+bash train_ance-tele_triviaqa.sh  # TriviaQA
+```
+
+P.S. Multi-GPU training is supported. Please keep the following hyperparameters unchanged and set `--negatives_x_device` when using multi-GPU setup. If your CUDA memory is limited, please use [Gradient Caching](#grad-cache-notice).
+
+|Hyperparameters|Augments|Single GPU|E.g., Four GPUs|
+|:-----|:-----|:-----|:-----|
+|Qry Batch Size|--per_device_train_batch_size|128|32|
+|(Positive + Negative) Passages per Qry|--train_n_passages|12|12|
+|Learning rate|--learning_rate|5e-6|5e-6|
+|Total training Epoch|--num_train_epochs|40|40|
+
+
+#### Prepare your ANCE-Tele for NQ and TriviaQA
+
+After training, the model are saved under the `${train_job_name}` folder like:
+```
+${train_job_name}
+  ├── query_model  # Qry-Encoder
+  └── passage_model  # Psg-Encoder
+```
+Before using your model, please copy the three files `special_tokens_map.json`, `tokenizer_config.json`, and `vocab.txt` into Qry/Psg-Encoder folders.
+```
+cp special_tokens_map.json tokenizer_config.json vocab.txt ./query_model
+cp special_tokens_map.json tokenizer_config.json vocab.txt ./passage_model
+```
+
+[4] Evaluate your ANCE-Tele
+
+Then you can follow the instructions in [NQ/TriviaQA: Reproduce w/ Our CheckPs](#nq-and-triviaqa-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckPs with your trained model file 😉:
+```
+export qry_encoder_name=${train_job_name}/query_model
+export psg_encoder_name=${train_job_name}/passage_model
+```
+
+
+### NQ and TriviaQA Reproduce from Scratch
+
+If you want to reproduce ANCE-Tele from scratch (Epi->2->3), you just need to prepare the vanilla pretrained model [co-condenser-wiki](https://huggingface.co/Luyu/co-condenser-wiki). Before starting to reproduce, please know the *quick-refreshing-strategy* and *train-from-scratch* mode of ANCE-Tele [[Iterative Training Notice]](#iterative-training-notice) 🙌.
+
+
+[1] Epi-1
+
+First mine the Tele-negatives using the the vanilla *co-condenser-wiki*. In Epi-1 , Tele-negatives contain ANN-negatives and Lookahead-negatives (LA-Neg) without Momentum.
+```
+bash epi-1-mine-nq.sh  # NQ
+bash epi-1-mine-triviaqa.sh  # TriviaQA
+```
+
+Then train the vanilla *co-condenser-wiki* with the Epi-1 Tele-negatives and early stop at 2k step for negative refreshing:
+```
+bash epi-1-train-nq.sh  # NQ
+bash epi-1-train-triviaqa.sh  # TriviaQA
+```
+
+[2] Epi-2
+
+For Epi-2, first prepare the Epi-1 trained model as introduced in [[Prepare your ANCE-Tele for NQ and TriviaQA]](#prepare-your-ance-tele-for-nq-and-triviaqa), and then use the prepared CheckPs to mine Epi-2 Tele-negatives, which contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-1 training negatives).
+```
+bash epi-2-mine-nq.sh  # NQ
+bash epi-2-mine-triviaqa.sh  # TriviaQA
+```
+
+Then train the vanilla *co-condenser-wiki* with the Epi-2 Tele-negatives and early stop at 2k step for negative refreshing:
+```
+bash epi-2-train-nq.sh  # NQ
+bash epi-2-train-triviaqa.sh  # TriviaQA
+```
+
+[3] Epi-3
+
+For last Epi-3, prepare the Epi-2 trained model as introduced in [[Prepare your ANCE-Tele for NQ and TriviaQA]](#prepare-your-ance-tele-for-nq-and-triviaqa), and then use the prepared CheckPs to mine Epi-3 Tele-negatives, which contain ANN-negatives, Lookahead-negatives (LA-Neg), and Momentum-negatives (Epi-2 training negatives).
+```
+bash epi-3-mine-nq.sh  # NQ
+bash epi-3-mine-triviaqa.sh  # TriviaQA
+```
+
+Then train the vanilla *co-condenser-wiki* with the Epi-3 Tele-negatives. This step is the same as introduced in [NQ/TriviaQA: Reproduce w/ Our Episode-3 Training Negatives](#nq-and-triviaqa-reproduce-using-our-episode-3-training-negatives):
+```
+bash epi-3-train-nq.sh  # NQ
+bash epi-3-train-triviaqa.sh  # TriviaQA
+```
+
+
+[4] Evaluate your ANCE-Tele
+
+After three episode, first [Prepare your ANCE-Tele for NQ and TriviaQA](#prepare-your-ance-tele-for-nq-and-triviaqa). Then you can follow the instructions in [NQ/TriviaQA: Reproduce w/ Our CheckPs](#nq-and-triviaqa-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckPs with your trained model file 😉:
+```
+export qry_encoder_name=${train_job_name}/query_model
+export psg_encoder_name=${train_job_name}/passage_model
+```
 
 
 
 ## Easy-to-Use Tips
 
-* [Faiss Notice](#faiss-notice): Multi-GPU/CPU Search
+* [Faiss Search Notice](#faiss-search-notice): Multi-GPU/CPU Search
 * [Grad Cache Notice](#grad-cache-notice): Save CUDA Memory (Train ANCE-Tele with 2080ti)
 * [Iterative Training Notice](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
-
 
 
 ## Contact Us
