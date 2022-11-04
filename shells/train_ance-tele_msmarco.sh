@@ -16,7 +16,6 @@ PORT="1234" ## check the port does not occupied
 ## *************************************
 TOKENIZER=bert-base-uncased
 TOKENIZER_ID=bert
-SplitNum=10
 ## *************************************
 
 ## **********************************************
