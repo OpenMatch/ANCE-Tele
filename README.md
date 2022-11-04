@@ -434,9 +434,9 @@ export psg_encoder_name=${train_job_name}/passage_model
 
 ## Easy-to-Use Tips
 
-* [Faiss Search Notice 🙌](#faiss-search-notice): How to use multi-GPU/CPU search
-* [Grad Cache Notice 🙌](#grad-cache-notice): How to save CUDA memory during training ANCE-Tele.
-* [Iterative Training Notice 🙌](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
+* [🙌 Faiss Search Notice](#faiss-search-notice): How to use multi-GPU/CPU search
+* [🙌 Grad Cache Notice](#grad-cache-notice): How to save CUDA memory during training ANCE-Tele.
+* [🙌 Iterative Training Notice](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
 
 
 ## Contact Us
