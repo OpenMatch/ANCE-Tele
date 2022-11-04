@@ -169,7 +169,7 @@ P.S. Multi-GPU training is supported. Please keep the following hyperparameters 
 
 (4) Evaluate your ANCE-Tele
 
-After training for 3 epochs, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs - (3)](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
+After training for 3 epochs, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs - (2)](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
 
 
@@ -222,7 +222,7 @@ bash epi-3-train-msmarco.sh
 
 (4) Evaluate your ANCE-Tele
 
-After three episodes, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
+After three episodes, you can follow the instructions in [MARCO: Reproduce w/ Our CheckPs - (2)](#marco-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckP with your trained model file 😉.
 
 
 ## Reproduce NQ and TriviaQA Results
@@ -335,7 +335,7 @@ Run the command: `tar -zxvf xxx`. Each uncompressed dataset contains two sub-fil
 }
 ```
 
-[3] Train ANCE-Tele using our Epi-3 training negtatives
+(3) Train ANCE-Tele using our Epi-3 training negtatives
 ```
 bash train_ance-tele_nq.sh  # NQ
 bash train_ance-tele_triviaqa.sh  # TriviaQA
@@ -365,9 +365,9 @@ cp special_tokens_map.json tokenizer_config.json vocab.txt ./query_model
 cp special_tokens_map.json tokenizer_config.json vocab.txt ./passage_model
 ```
 
-[4] Evaluate your ANCE-Tele
+(4) Evaluate your ANCE-Tele
 
-Then you can follow the instructions in [NQ/TriviaQA: Reproduce w/ Our CheckPs](#nq-and-triviaqa-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckPs with your trained model file 😉:
+Then you can follow the instructions in [NQ/TriviaQA: Reproduce w/ Our CheckPs - (2)](#nq-and-triviaqa-reproduce-using-our-checkps) to evaluate. Remember to replace the CheckPs with your trained model file 😉:
 ```
 export qry_encoder_name=${train_job_name}/query_model
 export psg_encoder_name=${train_job_name}/passage_model
@@ -415,7 +415,7 @@ bash epi-3-mine-nq.sh  # NQ
 bash epi-3-mine-triviaqa.sh  # TriviaQA
 ```
 
-Then train the vanilla *co-condenser-wiki* with the Epi-3 Tele-negatives. This step is the same as introduced in [NQ/TriviaQA: Reproduce w/ Our Episode-3 Training Negatives](#nq-and-triviaqa-reproduce-using-our-episode-3-training-negatives):
+Then train the vanilla *co-condenser-wiki* with the Epi-3 Tele-negatives. This step is the same as introduced in [NQ/TriviaQA: Reproduce w/ Our Episode-3 Training Negatives - (3)](#nq-and-triviaqa-reproduce-using-our-episode-3-training-negatives):
 ```
 bash epi-3-train-nq.sh  # NQ
 bash epi-3-train-triviaqa.sh  # TriviaQA
@@ -434,9 +434,9 @@ export psg_encoder_name=${train_job_name}/passage_model
 
 ## Easy-to-Use Tips
 
-* [🙌 Faiss Search Notice](#faiss-search-notice): How to use multi-GPU/CPU search
-* [🙌 Grad Cache Notice](#grad-cache-notice): How to save CUDA memory during training ANCE-Tele.
-* [🙌 Iterative Training Notice](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
+* [Faiss Search Notice 🙌](#faiss-search-notice): How to use multi-GPU/CPU search
+* [Grad Cache Notice 🙌](#grad-cache-notice): How to save CUDA memory during training ANCE-Tele.
+* [Iterative Training Notice 🙌](#iterative-training-notice): ANCE-Tele takes a *quick-refreshing-strategy* and *train-from-scratch* mode.
 
 
 ## Contact Us
