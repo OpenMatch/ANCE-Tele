@@ -5,7 +5,7 @@ This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Confer
 ```
 @inproceedings{sun2022ancetele,
   title={Reduce Catastrophic Forgetting of Dense Retrieval Training with Teleportation Negatives},
-  author={Si Sun, Chenyan Xiong, Yue Yu, Arnold Overwijk, Zhiyuan Liu and Jie Bao},
+  author={Si, Sun and Chenyan, Xiong and Yue, Yu and Arnold, Overwijk and Zhiyuan, Liu and Jie, Bao},
   booktitle={Proceedings of EMNLP 2022},
   year={2022}
 }
