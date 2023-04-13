@@ -9,7 +9,7 @@ The results on FewDR benchmark can be found in [FewDR-Results.csv](result.csv).
 
 ## Requirements
 
-The installation requirements here are the same as those for ANCE-Tele.
+The installation requirements here are the same as those for [ANCE-Tele](../../README.md).
 
 
 ## FewDR Dataset
