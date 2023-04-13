@@ -10,6 +10,12 @@ This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Confer
   year={2022}
 }
 ```
+## What's New ٩(๑>◡<๑)۶
+
+[2023/4/13] We update our ongoing work **["Rethinking Few-shot Ability in Dense Retrieval"](https://arxiv.org/pdf/2304.05845.pdf)** in this repository. Please switch to branch 'FewDR' and check the folder `ANCE-Tele/plugins/FewDR`.
+
+
+
 ## Outline
 
 - [ANCE-Tele](#ance-tele)
