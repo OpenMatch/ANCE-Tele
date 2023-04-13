@@ -5,7 +5,7 @@ The repository is about our recent work **["Rethinking Few-shot Ability in Dense
 
 ## Results
 
-The results on FewDR benchmark can be found in [FewDR-Results.csv](result.csv).
+The results on FewDR benchmark can be found in [FewDR-Results.csv](./result.csv).
 
 ## Requirements
 
