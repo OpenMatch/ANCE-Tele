@@ -88,7 +88,7 @@ bash full-shot-train.sh
 bash few-shot-train.sh
 ```
 
-***Different few-shot seeds can be set in the `few-shot-train.sh` shell script.*** Here we use 5 different seeds (41,42,43,44,45).
+**Different few-shot seeds can be set in the `few-shot-train.sh` shell script. Here we use 5 different seeds (41,42,43,44,45).**
 
 Multi-GPU training is supported. Please keep the following hyperparameters unchanged and set `--negatives_x_device` when using multi-GPU setup.
 
