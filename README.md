@@ -12,6 +12,15 @@ This is the implementation of ANCE-Tele introduced in the EMNLP 2022 Main Confer
 ```
 ## What's New ٩(๑>◡<๑)۶
 
+**[2023/9/26]** We release **a new ANCE-Tele checkpoint** and its Marco & BEIR evaluation results. Specific results for 18 BEIR datasets are shown on HuggingFace: [OpenMatch/ance-tele_coco-base_msmarco_qry-psg-encoder](https://huggingface.co/OpenMatch/ance-tele_coco-base_msmarco_qry-psg-encoder).
+
+|Model|Pretrain Model|Train w/ Marco Title|Marco Dev MRR@10|BEIR Avg NDCG@10|
+|:---|:---|:---|:---|:---|
+|ANCE-Tele|[cocodr-base](https://huggingface.co/OpenMatch/cocodr-base)|w/o|37.3|44.2|
+
+
+
+
 **[2023/4/13]** We update our ongoing work **["Rethinking Few-shot Ability in Dense Retrieval"](https://arxiv.org/pdf/2304.05845.pdf)** in this repository. Please switch to branch **'FewDR'** and check the folder `ANCE-Tele/plugins/FewDR`.
 
 
