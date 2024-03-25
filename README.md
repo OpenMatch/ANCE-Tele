@@ -460,7 +460,7 @@ For any question, feel free to create an issue, and we will try our best to solv
 
 ```
 NAME: Si Sun
-EMAIL: s-sun17@mails.tsinghua.edu.cn
+EMAIL: sunsi.shining@gmail.com
 ```
 
 ## Acknowledgement
